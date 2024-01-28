@@ -2,6 +2,9 @@ const exitstudent = require("../models/exitstudentModel.js");
 const User = require("../models/studentmodel.js");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const EmailDetails = require('../service/EmailDetails')
+
+const emailService = new EmailDetails();
 const exitStudent = async (req, res) => {
   try {
     const {
@@ -69,6 +72,7 @@ const exitStudent = async (req, res) => {
       user: userdata._id,
     });
 
+    emailService.sendPgCourseEmail(exitUser);
     return res.status(201).json({
       success: true,
       message: "User Created Successfully",

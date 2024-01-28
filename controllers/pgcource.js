@@ -2,7 +2,9 @@ const Pgcourses = require("../models/pgcource.js");
 const User = require("../models/studentmodel.js");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const EmailDetails = require('../service/EmailDetails')
 
+const emailService = new EmailDetails();
 const pg_cource = async (req, res) => {
   try {
     const {
@@ -76,6 +78,7 @@ const pg_cource = async (req, res) => {
       user: userdata._id,
     });
 
+    emailService.sendPgCourseEmail(user);
     return res.status(201).json({
       success: true,
       message: "User Created Successfully",
