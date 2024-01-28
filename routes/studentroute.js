@@ -3,7 +3,7 @@ const router = express.Router();
 // const {jobValidationRules}=require("../middlewares/jobValidation");
 //import from controllers studentsignup data
 const {signup} = require("../controllers/studentsignup.js");
-const {signin,getsigin_By_Id} = require("../controllers/studentsignin.js");
+const {signin,getsigin_By_Id,forgotPassword,resetPassword} = require("../controllers/studentsignin.js");
 const {newAdmission} = require("../controllers/newAdmissionCont.js");
 const {getNewAdmissionById,get_new_admission,delete_newadmission, update_New_Admission,} = require("../controllers/getNewAdmission.js");
 const {exitStudent,get_exitstudent,get_all_exit_student,delete_id_exitstudent}=require("../controllers/exitstudentCont.js");
@@ -12,6 +12,8 @@ const {job,get_job_student,get_all_Job_student} = require("../controllers/jobDet
 //post data routes 
 router.post("/signup", signup); 
 router.post("/signin", signin);
+router.post('/forgotpassword', forgotPassword);
+router.post('/resetpassword', resetPassword);
 router.post("/newAdmission",newAdmission);
 router.post("/job", job);
 router.post("/pg_cource",pg_cource);

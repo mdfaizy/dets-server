@@ -2,7 +2,10 @@
 const User = require("../models/studentmodel.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
+const nodemailer = require("nodemailer");
+require("dotenv").config();
+const crypto = require('crypto');
+const router= require("../routes/studentroute.js");
 // Login
 const signin = async (req, res) => {
   try {
@@ -76,48 +79,6 @@ const signin = async (req, res) => {
   }
 };
 
-// const getsiginById = async (req, res) => {
-//   try {
-//     const token = req.cookies.token || req.body.token;
-//     // Retrieve the value of the 'id' parameter from the URL
-//     console.log("hi", token);
-//     // const newadmissions = await newadmission.findById({ _id: id });
-
-//     let tokendata = {};
-//     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-//       if (err) {
-//         console.log("JWT verification failed:", err);
-//         // Handle invalid token
-//       } else {
-//         console.log("Decoded JWT payload:", decoded);
-//         tokendata = decoded;
-//         // Token is valid, handle the decoded payload
-//       }
-//     });
-
-//     // Find the user by email in the User model
-//     let userdata = await User.findOne({ user: tokendata.id });
-//     console.log("Found user:", userdata);
-//     if (!userdata) {
-//       return res.status(404).json({
-//         success: false,
-//         message: "No Data Found with Given Id",
-//       });
-//     }
-//     res.status(200).json({
-//       success: true,
-//       data: userdata,
-//       message: "Success",
-//     });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({
-//       success: false,
-//       error: err.message,
-//       message: "Server error",
-//     });
-//   }
-// };
 
 
 const getsigin_By_Id = async (req, res) => {
@@ -172,7 +133,106 @@ const getsigin_By_Id = async (req, res) => {
   }
 };
 
-// module.exports = { getsiginById };
 
 
-module.exports = { signin,getsigin_By_Id };
+
+const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please provide an email address',
+      });
+    }
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+      });
+    }
+
+    // Generate a random reset token
+    const resetToken = crypto.randomBytes(20).toString('hex');
+
+    // Set reset token and expiration in the user object
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+
+    await user.save();
+
+    // Send email with reset link
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.email, // Update with your email
+        pass: process.env.password, // Update with your email password
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.email, // Update with your email
+      to: user.email,
+      subject: 'Password Reset',
+      text: `Click on the following link to reset your password: http://localhost:5173/reasetpassword/${resetToken}`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return res.status(500).json({
+          success: false,
+          message: 'Error sending email',
+        });
+      }
+      res.json({ success: true, message: 'Email sent successfully' });
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: 'Forgot password failed',
+    });
+  }
+};
+
+
+const resetPassword = async (req, res) => {
+  try {
+    const { token, password } = req.body;
+
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid or expired token',
+      });
+    }
+
+    user.password = await bcrypt.hash(password, 10);
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+
+    await user.save();
+
+    res.json({ success: true, message: 'Password reset successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: 'Reset password failed',
+    });
+  }
+};
+
+
+
+
+module.exports = { signin,getsigin_By_Id,forgotPassword, resetPassword };

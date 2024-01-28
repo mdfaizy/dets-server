@@ -22,6 +22,8 @@ const User = require("./models/studentmodel.js");
 //routes
 const signup = require("./routes/studentroute.js");
 const signin = require("./routes/studentroute.js");
+const forgotpassword=require("./routes/studentroute.js");
+const resetpassword=require("./routes/studentroute.js");
 const job = require("./routes/studentroute.js");
 const newAdmission = require("./routes/studentroute.js");
 const getNewAdmissionById = require("./routes/studentroute.js");
@@ -58,6 +60,9 @@ app.get("/", (req, res) => {
 });
 app.use("/api/v1", signup);
 app.use("/api/v1", signin);
+app.use("/api/v1",forgotpassword);
+app.use("/api/v1",resetpassword);
+// app.use("/api/v1/reasetpassword/:token", reasetpassword);
 app.use("/api/v1", job);
 app.use("/api/v1", newAdmission);
 app.use("/api/v1", exitStudent);
