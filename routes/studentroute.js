@@ -12,7 +12,7 @@ const {signin,getsigin_By_Id,forgotPassword,resetPassword} = require("../control
 const {newAdmission} = require("../controllers/newAdmissionCont.js");
 const {getNewAdmissionById,get_new_admission,delete_newadmission, update_New_Admission,} = require("../controllers/getNewAdmission.js");
 const {exitStudent,get_exitstudent,get_all_exit_student,delete_id_exitstudent}=require("../controllers/exitstudentCont.js");
-const {pg_cource,get_pg_student,get_all_pgcource_student,delete_id_pgstudent}=require("../controllers/pgcource.js");
+const {pg_cource,get_pg_student,get_all_pgcource_student,delete_id_pgstudent,update_pg_cource}=require("../controllers/pgcource.js");
 const {job,get_job_student,get_all_Job_student} = require("../controllers/jobDetails.js");
 //post data routes 
 router.post("/signup", signup); 
@@ -41,6 +41,7 @@ router.delete('/delete_id_pgstudent',delete_id_pgstudent);
 //update routes
 
 router.put("/update_New_Admission/:id", update_New_Admission,);
+router.put("/update_pg_cource/:id",update_pg_cource);
 module.exports = router;
 
 

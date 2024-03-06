@@ -315,6 +315,74 @@ const getsigin_By_Id = async (req, res) => {
 
 
 
+// const forgotPassword = async (req, res) => {
+//   try {
+//     const { email } = req.body;
+
+//     if (!email) {
+//       return res.status(400).json({
+//         success: false,
+//         message: 'Please provide an email address',
+//       });
+//     }
+
+//     const user = await User.findOne({ email });
+
+//     if (!user) {
+//       return res.status(404).json({
+//         success: false,
+//         message: 'User not found',
+//       });
+//     }
+
+//     // Generate a random reset token
+//     const resetToken = crypto.randomBytes(20).toString('hex');
+
+//     // Set reset token and expiration in the user object
+//     user.resetPasswordToken = resetToken;
+//     user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+
+//     await user.save();
+
+//     // Send email with reset link
+//     const transporter = nodemailer.createTransport({
+//       service: 'gmail',
+//       auth: {
+//         user: process.SENDER_EMAIL, // Update with your email
+//         pass: process.env.SENDER_PASSWORD, // Update with your email password
+//       },
+//     });
+
+//     const mailOptions = {
+//       from: process.env.SENDER_EMAIL, // Update with your email
+//       to: user.email,
+//       subject: 'Password Reset',
+//       text: `Click on the following link to reset your password: http://localhost:5173/reasetpassword/${resetToken}`,
+//     };
+
+//     transporter.sendMail(mailOptions, (error, info) => {
+//       if (error) {
+//         return res.status(500).json({
+//           success: false,
+//           message: 'Error sending email',
+//         });
+//       }
+//       res.json({ success: true, message: 'Email sent successfully' });
+//     });
+
+
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({
+//       success: false,
+//       message: 'Forgot password failed',
+//     });
+//   }
+// };
+
+
+
+
 const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
@@ -345,30 +413,102 @@ const forgotPassword = async (req, res) => {
     await user.save();
 
     // Send email with reset link
+    // const transporter = nodemailer.createTransport({
+    //   service: 'gmail',
+    //   auth: {
+    //     user: process.SENDER_EMAIL, // Update with your email
+    //     pass: process.env.SENDER_PASSWORD, // Update with your email password
+    //   },
+    // });
+
+    // const mailOptions = {
+    //   from: process.env.SENDER_EMAIL, // Update with your email
+    //   to: user.email,
+    //   subject: 'Password Reset',
+    //   text: `Click on the following link to reset your password: http://localhost:5173/reasetpassword/${resetToken}`,
+    // };
+
+    // transporter.sendMail(mailOptions, (error, info) => {
+    //   if (error) {
+    //     return res.status(500).json({
+    //       success: false,
+    //       message: 'Error sending email',
+    //     });
+    //   }
+    //   res.json({ success: true, message: 'Email sent successfully' });
+    // });
+
+
+
+
+    // const transporter = nodemailer.createTransport({
+    //   service: 'gmail',
+    //   auth: {
+    //     user: process.env.SENDER_EMAIL,
+    //     pass: process.env.SENDER_PASSWORD,
+    //   },
+    //   debug: true, // Enable debug mode
+    // });
+    //  const mailOptions = {
+    //   from: process.env.SENDER_EMAIL, // Update with your email
+    //   to: user.email,
+    //   subject: 'Password Reset',
+    //   text: `Click on the following link to reset your password: http://localhost:5173/reasetpassword/${resetToken}`,
+    // };
+    // transporter.verify(mailOptions,function(error, success) {
+    //   if (error) {
+    //     console.error('Transporter setup failed:', error);
+    //     return res.status(500).json({
+    //       success: false,
+    //       message: 'Error setting up email transporter',
+    //     });
+    //   }
+    //   console.log('Server is ready to send emails:', success);
+    // });
+
+
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: process.SENDER_EMAIL, // Update with your email
-        pass: process.env.SENDER_PASSWORD, // Update with your email password
+        user: process.env.SENDER_EMAIL,
+        pass: process.env.SENDER_PASSWORD,
       },
+      debug: true, // Enable debug mode
     });
-
+    
     const mailOptions = {
-      from: process.env.SENDER_EMAIL, // Update with your email
+      from: process.env.SENDER_EMAIL,
       to: user.email,
       subject: 'Password Reset',
       text: `Click on the following link to reset your password: http://localhost:5173/reasetpassword/${resetToken}`,
     };
-
-    transporter.sendMail(mailOptions, (error, info) => {
+    
+    transporter.verify(function (error, success) {
       if (error) {
+        console.error('Transporter setup failed:', error);
         return res.status(500).json({
           success: false,
-          message: 'Error sending email',
+          message: 'Error setting up email transporter',
         });
       }
-      res.json({ success: true, message: 'Email sent successfully' });
+      console.log('Server is ready to send emails:', success);
+    
+      // Now that the transporter is verified, you can send the email
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error('Error sending email:', error);
+          return res.status(500).json({
+            success: false,
+            message: 'Error sending email',
+          });
+        }
+        res.json({ success: true, message: 'Email sent successfully' });
+      });
     });
+    
+    
+
+
   } catch (err) {
     console.error(err);
     res.status(500).json({

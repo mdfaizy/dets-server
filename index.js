@@ -51,6 +51,7 @@ const delete_id_exitstudent=require('./routes/studentroute.js');
 const delete_id_pgstudent=require('./routes/studentroute.js');
 
 const  update_New_Admission=require('./routes/studentroute.js');
+const update_pg_cource=require('./routes/studentroute.js');
 //dbconnect
 require("./config/dbconnect").connect();
 
@@ -88,6 +89,8 @@ app.use('api/v1',delete_id_pgstudent);
 // delete
 
 app.use("api/v1", update_New_Admission,);
+app.use("api/v1",update_pg_cource);
+
 app.get("/allstudents", async (req, res) => {
   try {
     const users = await User.find(); // Retrieve all users from the database
