@@ -1,4 +1,4 @@
-// const { compare } = require("bcrypt");
+// // const { compare } = require("bcrypt");
 const User = require("../models/studentmodel.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -6,7 +6,85 @@ const nodemailer = require("nodemailer");
 require("dotenv").config();
 const crypto = require('crypto');
 const router= require("../routes/studentroute.js");
-// Login
+// // Login
+// // const signin = async (req, res) => {
+// //   try {
+// //     const { email, password } = req.body;
+// //     console.log(email, password);
+// //     if (!email || !password) {
+// //       return res.status(400).json({
+// //         success: false,
+// //         message: "Please fill all the details carefully",
+// //       });
+// //     }
+
+
+    
+// //     if(email==process.env.admin_email&&password==process.env.admin_password){
+// //       return  res.cookie("token", process.env.admin_token).status(200).json({
+// //         success: true,
+// //         token:process.env.admin_token,
+// //        message: "User logged in successfully",
+// //       });
+
+// //     }
+// //     // check for register user
+// //     let user = await User.findOne({ email });
+// //     if (!user) {
+// //       return res.status(401).json({
+// //         success: false,
+// //         message: "User does not exist",
+// //       });
+// //     }
+
+// //     // Verify password & generate a JWT token
+
+// //     const payload = {
+// //       email: user.email,
+// //       id: user._id,
+// //     };
+
+// //     if (await bcrypt.compare(password, user.password)) {
+// //       // password match
+// //       let token = jwt.sign(payload, process.env.JWT_SECRET, {
+// //         expiresIn: "1d",
+// //       });
+// //       console.log("the Token", token);
+// //       user = user.toObject();
+// //       user.token = token;
+// //       user.password = undefined;
+
+// //       const options = {
+// //         expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+// //         httpOnly: true,
+// //       };
+
+// //       res.cookie("token", token, options).status(200).json({
+// //         success: true,
+// //         token,
+// //         user,
+// //         message: "User logged in successfully",
+// //       });
+// //     } else {
+// //       // password not match
+// //       return res.status(403).json({
+// //         success: false,
+// //         message: "Password does not match",
+// //       });
+// //     }
+// //   } catch (err) {
+// //     console.error(err);
+// //     return res.status(500).json({
+// //       success: false,
+// //       message: "Login false",
+// //     });
+// //   }
+// // };
+
+
+
+
+// // --------------------------------------------------------
 const signin = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -14,19 +92,20 @@ const signin = async (req, res) => {
     if (!email || !password) {
       return res.status(400).json({
         success: false,
-        message: "Please fill all the details carefully",
+        message: "Please fill in all the details carefully",
       });
     }
-    
-    if(email==process.env.admin_email&&password==process.env.admin_password){
-      return  res.cookie("token", process.env.admin_token).status(200).json({
-        success: true,
-        token:process.env.admin_token,
-       message: "User logged in successfully",
-      });
 
+    // Check for admin
+    if (email === process.env.admin_email && password === process.env.admin_password) {
+      return res.cookie("token", process.env.admin_token).status(200).json({
+        success: true,
+        token: process.env.admin_token,
+        message: "Admin logged in successfully",
+      });
     }
-    // check for register user
+
+    // Check for registered user
     let user = await User.findOne({ email });
     if (!user) {
       return res.status(401).json({
@@ -36,17 +115,27 @@ const signin = async (req, res) => {
     }
 
     // Verify password & generate a JWT token
-
     const payload = {
       email: user.email,
       id: user._id,
     };
 
     if (await bcrypt.compare(password, user.password)) {
-      // password match
-      let token = jwt.sign(payload, process.env.JWT_SECRET, {
-        expiresIn: "1d",
-      });
+      // Password match
+      let token;
+
+      if (user.accountType === "Instructor" &&user.instroctorkey===process.env.instructor_key) {
+        // Generate token for instructor
+        token = jwt.sign({ ...payload, role: "Instructor" }, process.env.JWT_SECRET, {
+          expiresIn: "1d",
+        });
+      } else {
+        // Generate default token for other account types
+        token = jwt.sign(payload, process.env.JWT_SECRET, {
+          expiresIn: "1d",
+        });
+      }
+
       console.log("the Token", token);
       user = user.toObject();
       user.token = token;
@@ -64,7 +153,7 @@ const signin = async (req, res) => {
         message: "User logged in successfully",
       });
     } else {
-      // password not match
+      // Password not match
       return res.status(403).json({
         success: false,
         message: "Password does not match",
@@ -74,10 +163,100 @@ const signin = async (req, res) => {
     console.error(err);
     return res.status(500).json({
       success: false,
-      message: "Login false",
+      message: "Login failed",
     });
   }
 };
+
+
+// ==============================================
+// const signin = async (req, res) => {
+//   try {
+//       const { email, password } = req.body;
+
+//       if (!email || !password) {
+//           return res.status(400).json({
+//               success: false,
+//               message: "Please fill all the details carefully",
+//           });
+//       }
+
+//       // Check if it is the admin login
+//       if (email == process.env.admin_email && password == process.env.admin_password) {
+//           return res.cookie("token", process.env.admin_token).status(200).json({
+//               success: true,
+//               token: process.env.admin_token,
+//               message: "Admin logged in successfully",
+//           });
+//       }
+
+//       // Check for the instructor login
+//       let user = await User.findOne({ email });
+
+//       if (!user) {
+//           return res.status(401).json({
+//               success: false,
+//               message: "User does not exist",
+//           });
+//       }
+
+//       // Verify password & generate a JWT token
+//       const payload = {
+//           email: user.email,
+//           id: user._id,
+//       };
+
+//       let token;
+
+//       if (user.accountType === 'Instructor') {
+//           // If the user is an Instructor, set a specific key
+//           if (password === process.env.instructor_key) {
+//               token = jwt.sign(payload, process.env.JWT_SECRET, {
+//                   expiresIn: "1d",
+//               });
+//           } else {
+//               return res.status(403).json({
+//                   success: false,
+//                   message: "Key for Instructor is incorrect",
+//               });
+//           }
+//       } else {
+//           // For other account types, check password as usual
+//           if (await bcrypt.compare(password, user.password)) {
+//               token = jwt.sign(payload, process.env.JWT_SECRET, {
+//                   expiresIn: "1d",
+//               });
+//           } else {
+//               return res.status(403).json({
+//                   success: false,
+//                   message: "Password does not match",
+//               });
+//           }
+//       }
+
+//       user = user.toObject();
+//       user.token = token;
+//       user.password = undefined;
+
+//       const options = {
+//           expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+//           httpOnly: true,
+//       };
+
+//       res.cookie("token", token, options).status(200).json({
+//           success: true,
+//           token,
+//           user,
+//           message: "User logged in successfully",
+//       });
+//   } catch (err) {
+//       console.error(err);
+//       return res.status(500).json({
+//           success: false,
+//           message: "Login failed",
+//       });
+//   }
+// };
 
 
 

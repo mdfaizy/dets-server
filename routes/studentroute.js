@@ -1,5 +1,10 @@
 const express = require("express");
 const router = express.Router();
+
+const { auth } = require("../middlewares/auth.js");
+
+
+
 // const {jobValidationRules}=require("../middlewares/jobValidation");
 //import from controllers studentsignup data
 const {signup} = require("../controllers/studentsignup.js");
@@ -37,4 +42,5 @@ router.delete('/delete_id_pgstudent',delete_id_pgstudent);
 
 router.put("/update_New_Admission/:id", update_New_Admission,);
 module.exports = router;
+
 

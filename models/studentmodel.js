@@ -17,6 +17,16 @@ const studentSchema=mongoose.Schema({
         type:String,
         required:true
     },
+    accountType: {
+        type: String,
+        // required: true,
+        enum: ['Student', 'Instructor'], // <-- Updated enum values
+    },
+    
+    instructorKey: {
+        type: String,
+        default: null,
+    },
     resetPasswordToken: {
         type: String,
         default: null,

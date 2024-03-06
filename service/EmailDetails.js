@@ -13,10 +13,7 @@ class EmailDetails  {
         this.nodeMailerServiceObj = new NodeMailerDetails();
     }
 
-    // sendEnquiryEmail(pg_cource) {
-    //     const emailContent = getEmailTemplate(enquiry.name, enquiry.email, enquiry.mobile, enquiry.message);
-    //     this.sendMailer(emailContent,'Thank You for Contacting Us (www.almanacsocialwelfare.com)',enquiry.email);
-    // }
+
 
     sendPgCourseEmail(user) {
         const emailContent = getPgCourseEmailTemplate(user);
