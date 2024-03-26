@@ -347,7 +347,7 @@ const jwt = require("jsonwebtoken");
 
 require("dotenv").config();
 
-const job = async (req, res) => {
+exports.job = async (req, res) => {
   try {
 
     //  // Applying validation rules
@@ -470,7 +470,7 @@ const job = async (req, res) => {
 //   }
 // };
 
-const get_job_student = async (req, res) => {
+exports.get_job_student = async (req, res) => {
   try {
     const token = req.cookies.token || req.body.token;
     // Retrieve the value of the 'id' parameter from the URL
@@ -513,7 +513,7 @@ const get_job_student = async (req, res) => {
   }
 };
 //All job information in Student  data in Dets
-const get_all_Job_student = async (req, res) => {
+exports.get_all_Job_student = async (req, res) => {
   try {
     // fetch all todo items from database
     const AllJob = await Job.find({});
@@ -534,7 +534,3 @@ const get_all_Job_student = async (req, res) => {
   }
 };
 
-//delete data job data 
-
-
-module.exports = { job,get_job_student,get_all_Job_student };

@@ -6,84 +6,51 @@ const nodemailer = require("nodemailer");
 require("dotenv").config();
 const crypto = require('crypto');
 const router= require("../routes/studentroute.js");
-// // Login
-// // const signin = async (req, res) => {
-// //   try {
-// //     const { email, password } = req.body;
-// //     console.log(email, password);
-// //     if (!email || !password) {
-// //       return res.status(400).json({
-// //         success: false,
-// //         message: "Please fill all the details carefully",
-// //       });
-// //     }
-
-
-    
-// //     if(email==process.env.admin_email&&password==process.env.admin_password){
-// //       return  res.cookie("token", process.env.admin_token).status(200).json({
-// //         success: true,
-// //         token:process.env.admin_token,
-// //        message: "User logged in successfully",
-// //       });
-
-// //     }
-// //     // check for register user
-// //     let user = await User.findOne({ email });
-// //     if (!user) {
-// //       return res.status(401).json({
-// //         success: false,
-// //         message: "User does not exist",
-// //       });
-// //     }
-
-// //     // Verify password & generate a JWT token
-
-// //     const payload = {
-// //       email: user.email,
-// //       id: user._id,
-// //     };
-
-// //     if (await bcrypt.compare(password, user.password)) {
-// //       // password match
-// //       let token = jwt.sign(payload, process.env.JWT_SECRET, {
-// //         expiresIn: "1d",
-// //       });
-// //       console.log("the Token", token);
-// //       user = user.toObject();
-// //       user.token = token;
-// //       user.password = undefined;
-
-// //       const options = {
-// //         expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-// //         httpOnly: true,
-// //       };
-
-// //       res.cookie("token", token, options).status(200).json({
-// //         success: true,
-// //         token,
-// //         user,
-// //         message: "User logged in successfully",
-// //       });
-// //     } else {
-// //       // password not match
-// //       return res.status(403).json({
-// //         success: false,
-// //         message: "Password does not match",
-// //       });
-// //     }
-// //   } catch (err) {
-// //     console.error(err);
-// //     return res.status(500).json({
-// //       success: false,
-// //       message: "Login false",
-// //     });
-// //   }
-// // };
 
 
 
+// controllers/authController.js
+// const verify_email = async (req, res) => {
+//   const { token } = req.query;
 
+//   if (!token) {
+//       return res.status(400).json({
+//           success: false,
+//           message: 'Verification token is missing',
+//       });
+//   }
+
+//   try {
+//       // Verify the token
+//       const decoded = jwt.verify(token, process.env.JWT_SECRET);
+//       const userId = decoded.userId;
+
+//       // Find the user by ID
+//       const user = await User.findById(userId);
+
+//       if (!user) {
+//           return res.status(404).json({
+//               success: false,
+//               message: 'User not found',
+//           });
+//       }
+
+//       // Mark the user as verified
+//       user.verified = true;
+//       await user.save();
+
+//       return res.status(200).json({
+//           success: true,
+//           message: 'Email verified successfully',
+//       });
+//   } catch (error) {
+//       console.error(error);
+//       return res.status(500).json({
+//           success: false,
+//           message: 'Failed to verify email',
+//       });
+//   }
+// };
 // // --------------------------------------------------------
 const signin = async (req, res) => {
   try {
@@ -141,11 +108,23 @@ const signin = async (req, res) => {
       user.token = token;
       user.password = undefined;
 
+      // const options = {
+      //   expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+      //   httpOnly: true,
+      // };
+
+      // res.cookie("token", token, options).status(200).json({
+      //   success: true,
+      //   token,
+      //   user,
+      //   message: "User logged in successfully",
+      // });
+
       const options = {
         expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-        httpOnly: true,
+        httpOnly: true, // Add httpOnly flag to make the cookie accessible only through HTTP(S) protocol
       };
-
+      
       res.cookie("token", token, options).status(200).json({
         success: true,
         token,
@@ -169,94 +148,8 @@ const signin = async (req, res) => {
 };
 
 
-// ==============================================
-// const signin = async (req, res) => {
-//   try {
-//       const { email, password } = req.body;
 
-//       if (!email || !password) {
-//           return res.status(400).json({
-//               success: false,
-//               message: "Please fill all the details carefully",
-//           });
-//       }
 
-//       // Check if it is the admin login
-//       if (email == process.env.admin_email && password == process.env.admin_password) {
-//           return res.cookie("token", process.env.admin_token).status(200).json({
-//               success: true,
-//               token: process.env.admin_token,
-//               message: "Admin logged in successfully",
-//           });
-//       }
-
-//       // Check for the instructor login
-//       let user = await User.findOne({ email });
-
-//       if (!user) {
-//           return res.status(401).json({
-//               success: false,
-//               message: "User does not exist",
-//           });
-//       }
-
-//       // Verify password & generate a JWT token
-//       const payload = {
-//           email: user.email,
-//           id: user._id,
-//       };
-
-//       let token;
-
-//       if (user.accountType === 'Instructor') {
-//           // If the user is an Instructor, set a specific key
-//           if (password === process.env.instructor_key) {
-//               token = jwt.sign(payload, process.env.JWT_SECRET, {
-//                   expiresIn: "1d",
-//               });
-//           } else {
-//               return res.status(403).json({
-//                   success: false,
-//                   message: "Key for Instructor is incorrect",
-//               });
-//           }
-//       } else {
-//           // For other account types, check password as usual
-//           if (await bcrypt.compare(password, user.password)) {
-//               token = jwt.sign(payload, process.env.JWT_SECRET, {
-//                   expiresIn: "1d",
-//               });
-//           } else {
-//               return res.status(403).json({
-//                   success: false,
-//                   message: "Password does not match",
-//               });
-//           }
-//       }
-
-//       user = user.toObject();
-//       user.token = token;
-//       user.password = undefined;
-
-//       const options = {
-//           expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-//           httpOnly: true,
-//       };
-
-//       res.cookie("token", token, options).status(200).json({
-//           success: true,
-//           token,
-//           user,
-//           message: "User logged in successfully",
-//       });
-//   } catch (err) {
-//       console.error(err);
-//       return res.status(500).json({
-//           success: false,
-//           message: "Login failed",
-//       });
-//   }
-// };
 
 
 
@@ -312,77 +205,6 @@ const getsigin_By_Id = async (req, res) => {
   }
 };
 
-
-
-
-// const forgotPassword = async (req, res) => {
-//   try {
-//     const { email } = req.body;
-
-//     if (!email) {
-//       return res.status(400).json({
-//         success: false,
-//         message: 'Please provide an email address',
-//       });
-//     }
-
-//     const user = await User.findOne({ email });
-
-//     if (!user) {
-//       return res.status(404).json({
-//         success: false,
-//         message: 'User not found',
-//       });
-//     }
-
-//     // Generate a random reset token
-//     const resetToken = crypto.randomBytes(20).toString('hex');
-
-//     // Set reset token and expiration in the user object
-//     user.resetPasswordToken = resetToken;
-//     user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-
-//     await user.save();
-
-//     // Send email with reset link
-//     const transporter = nodemailer.createTransport({
-//       service: 'gmail',
-//       auth: {
-//         user: process.SENDER_EMAIL, // Update with your email
-//         pass: process.env.SENDER_PASSWORD, // Update with your email password
-//       },
-//     });
-
-//     const mailOptions = {
-//       from: process.env.SENDER_EMAIL, // Update with your email
-//       to: user.email,
-//       subject: 'Password Reset',
-//       text: `Click on the following link to reset your password: http://localhost:5173/reasetpassword/${resetToken}`,
-//     };
-
-//     transporter.sendMail(mailOptions, (error, info) => {
-//       if (error) {
-//         return res.status(500).json({
-//           success: false,
-//           message: 'Error sending email',
-//         });
-//       }
-//       res.json({ success: true, message: 'Email sent successfully' });
-//     });
-
-
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({
-//       success: false,
-//       message: 'Forgot password failed',
-//     });
-//   }
-// };
-
-
-
-
 const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
@@ -395,23 +217,18 @@ const forgotPassword = async (req, res) => {
     }
 
     const user = await User.findOne({ email });
-
     if (!user) {
       return res.status(404).json({
         success: false,
         message: 'User not found',
       });
     }
-
     // Generate a random reset token
     const resetToken = crypto.randomBytes(20).toString('hex');
-
     // Set reset token and expiration in the user object
     user.resetPasswordToken = resetToken;
     user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-
     await user.save();
-
     // Send email with reset link
     // const transporter = nodemailer.createTransport({
     //   service: 'gmail',
@@ -465,8 +282,6 @@ const forgotPassword = async (req, res) => {
     //   }
     //   console.log('Server is ready to send emails:', success);
     // });
-
-
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -554,4 +369,4 @@ const resetPassword = async (req, res) => {
 
 
 
-module.exports = { signin,getsigin_By_Id,forgotPassword, resetPassword };
+module.exports = { signin,getsigin_By_Id,forgotPassword, resetPassword};

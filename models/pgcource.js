@@ -6,7 +6,7 @@ const pgStudentSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: User
   },
-  fristName: {
+  firstName: {
     type: String,
   },
   lastName: {

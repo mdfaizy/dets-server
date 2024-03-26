@@ -1,40 +1,72 @@
-const mongoose = require('mongoose');
-const studentSchema=mongoose.Schema({
-    firstName:{
-        type:String,
-        required:true
+const mongoose = require("mongoose");
+const studentSchema = mongoose.Schema({
+  firstName: {
+    type: String,
+    required: true,
+  },
+
+  lastName: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  accountType: {
+    type: String,
+    // required: true,
+    enum: ["Student", "Instructor"], // <-- Updated enum values
+  },
+  newAdmission: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "newAdmissionCont",
     },
-   
-    lastName:{
-        type:String,
-        required:true
+  ],
+  pgcourse: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "pgcource",
     },
-    email:{
-        type:String,
-        required:true
+  ],
+  exitStudent: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "exitstudentCont",
     },
-    password:{
-        type:String,
-        required:true
+  ],
+  job: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "jobDeatils",
     },
-    accountType: {
-        type: String,
-        // required: true,
-        enum: ['Student', 'Instructor'], // <-- Updated enum values
-    },
-    
-    instructorKey: {
-        type: String,
-        default: null,
-    },
-    resetPasswordToken: {
-        type: String,
-        default: null,
-      },
-      resetPasswordExpires: {
-        type: Date,
-        default: null,
-      },
-})
+  ],
+  feedback: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "feedback",
+    // required: true,
+  },
+  instructorKey: {
+    type: String,
+    default: null,
+  },
+  image: {
+    type: String,
+    // required: true,
+  },
+  resetPasswordToken: {
+    type: String,
+    default: null,
+  },
+  resetPasswordExpires: {
+    type: Date,
+    default: null,
+  },
+});
 
 module.exports = mongoose.model("User", studentSchema);

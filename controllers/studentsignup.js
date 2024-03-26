@@ -1,294 +1,7 @@
 const User = require("../models/studentmodel.js");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken")
-// exports.signup = async (req, res) => {
-//   try {
-//     const { firstName, lastName, email, password } = req.body;
-//     // check if user already exist
-//     const existingUser = await User.findOne({ email });
-
-//     if (existingUser) {
-//       return res.status(400).json({
-//         success: false,
-//         message: "User Already Exists",
-//       });
-//     }
-
-//     console.log(firstName, lastName, email, password);
-//     //   Create Entry for User
-//     //   let user = await User.create({
-//     //       firstName,lastName,email,password
-//     //   });
-
-//     const newUser = new User({
-//       firstName,
-//       lastName,
-//       email,
-//       password,
-//     });
-
-//     // Save the user to the database
-//     await newUser.save();
-
-//     return res.status(200).json({
-//       success: true,
-//       message: "User Created Successfully",
-//       data: newUser,
-//     });
-//   } catch (err) {
-//     console.error(err);
-//     return res.status(500).json({
-//       success: false,
-//       message: "User cannot be register,Please try again later",
-//     });
-//   }
-// };
-
-
-
-
-
+const jwt = require("jsonwebtoken");
 require("dotenv").config()
-
-// Sign up route handler
-// exports.signup = async (req, res) => {
-//     try {
-//         // get data
-//         const {firstName,lastName, email, password } = req.body;
-
-//         // check if user already exist 
-//         const existingUser = await User.findOne({ email });
-
-//         if (existingUser) {
-//             return res.status(400).json({
-//                 success: false,
-//                 message: "User Already Exists",
-//             })
-//         }
-
-//         // Secured password 
-//         let hashedPassword;
-//         try {
-//             hashedPassword = await bcrypt.hash(password, 10);
-//         }
-//         catch (err) {
-//             return res.status(500).json({
-//                 success: false,
-//                 message: "Error in hashing password",
-//             })
-//         }
-
-//         // Create Entry for User
-//         let user = await User.create({
-//           firstName,lastName,email,password:hashedPassword
-//         });
-
-//         return res.status(200).json({
-//             success : true,
-//             message : "User Created Successfully",
-//             data : user
-//         });
-//     }
-//     catch (err) {
-//         console.error(err)
-//         return res.status(500).json({
-//             success: false,
-//             message: "User cannot be register,Please try again later",
-//         })
-//     }
-// }
-
-
-// Sign up route handler
-// exports.signup = async (req, res) => {
-//     try {
-//         // get data
-//         const { firstName, lastName, email, password, accountType } = req.body;
-
-//         // check if user already exists
-//         const existingUser = await User.findOne({ email });
-
-//         if (existingUser) {
-//             return res.status(400).json({
-//                 success: false,
-//                 message: 'User Already Exists',
-//             });
-//         }
-
-//         // Secured password
-//         let hashedPassword;
-//         try {
-//             hashedPassword = await bcrypt.hash(password, 10);
-//         } catch (err) {
-//             return res.status(500).json({
-//                 success: false,
-//                 message: 'Error in hashing password',
-//             });
-//         }
-
-//         // Create Entry for User
-//         let user = await User.create({
-//             firstName,
-//             lastName,
-//             email,
-//             password: hashedPassword,
-//             accountType,
-//         });
-
-//         return res.status(200).json({
-//             success: true,
-//             message: 'User Created Successfully',
-//             data: user,
-//         });
-//     } catch (err) {
-//         console.error(err);
-//         return res.status(500).json({
-//             success: false,
-//             message: 'User cannot be registered. Please try again later',
-//         });
-//     }
-// };
-
-
-
-// exports.signup = async (req, res) => {
-//     try {
-//         // get data
-//         const { firstName, lastName, email, password, accountType } = req.body;
-
-//         // check if user already exists
-//         const existingUser = await User.findOne({ email });
-
-//         if (existingUser) {
-//             return res.status(400).json({
-//                 success: false,
-//                 message: 'User Already Exists',
-//             });
-//         }
-
-//         // Secured password
-//         let hashedPassword;
-//         try {
-//             hashedPassword = await bcrypt.hash(password, 10);
-//         } catch (err) {
-//             return res.status(500).json({
-//                 success: false,
-//                 message: 'Error in hashing password',
-//             });
-//         }
-
-//         // Generate a specific key for Instructors
-//         let instructorKey = null;
-//         if (accountType === 'Instructor') {
-//             instructorKey = 'ukdets@#1234';
-//         }
-
-//         // Create Entry for User
-//         let user = await User.create({
-//             firstName,
-//             lastName,
-//             email,
-//             password: hashedPassword,
-//             accountType,
-//             instructorKey,
-//         });
-
-//         return res.status(200).json({
-//             success: true,
-//             message: 'User Created Successfully',
-//             data: user,
-//         });
-//     } catch (err) {
-//         console.error(err);
-//         return res.status(500).json({
-//             success: false,
-//             message: 'User cannot be registered. Please try again later',
-//         });
-//     }
-// };
-
-// const generateToken = (user) => {
-//     const payload = {
-//       userId: user._id,
-//       email: user.email,
-//       accountType: user.accountType, // Add the account type to the payload
-//     };
-  
-//     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
-//     return token;
-//   };
-
-// exports.signup = async (req, res) => {
-//     try {
-//         // get data
-//         const { firstName, lastName, email, password, confirmPassword, accountType, instructorKey } = req.body;
-
-//         // check if user already exists
-//         const existingUser = await User.findOne({ email });
-
-//         if (existingUser) {
-//             return res.status(400).json({
-//                 success: false,
-//                 message: 'User Already Exists',
-//             });
-//         }
-
-//         // Check if the account type is 'Instructor' and the provided instructor key is correct
-//         if (accountType === 'Instructor' && instructorKey !== 'ukdets@#1234') 
-//             {
-//             return res.status(403).json({
-//                 success: false,
-//                 message: 'Instructor key is incorrect',
-//             });
-//         }
-
-//         // Secured password
-//         let hashedPassword;
-//         try {
-//             hashedPassword = await bcrypt.hash(password, 10);
-//         } catch (err) {
-//             return res.status(500).json({
-//                 success: false,
-//                 message: 'Error in hashing password',
-//             });
-//         }
-
-//         // Create Entry for User
-//         let user = await User.create({
-//             firstName,
-//             lastName,
-//             email,
-//             password: hashedPassword,
-//             accountType,
-//             instructorKey,
-//         });
-
-//         // Generate image URL using DiceBear API
-//         const imageUrl = `https://api.dicebear.com/6.x/initials/svg?seed=${firstName} ${lastName}`;
-//         const token = generateToken(user);
-//         // Update user's image property
-//         user.image = imageUrl;
-//         await user.save();
-
-//         return res.status(200).json({
-//             success: true,
-//             message: 'User Created Successfully',
-//             // data: user,
-//             data: { user, token },
-
-//         });
-//     } catch (err) {
-//         console.error(err);
-//         return res.status(500).json({
-//             success: false,
-//             message: 'User cannot be registered. Please try again later',
-//         });
-//     }
-// };
-
-
-
-
 const generateToken = (user) => {
     const payload = {
         userId: user._id,
@@ -337,12 +50,13 @@ exports.signup = async (req, res) => {
             password: hashedPassword,
             accountType,
             instructorKey,
+            image: `https://api.dicebear.com/6.x/initials/svg?seed=${firstName} ${lastName}&backgroundColor=00897b,00acc1,039be5,1e88e5,3949ab,43a047,5e35b1,7cb342,8e24aa,c0ca33,d81b60,e53935,f4511e,fb8c00,fdd835,ffb300,ffd5dc,ffdfbf,c0aede,d1d4f9,b6e3f4&backgroundType=solid,gradientLinear&backgroundRotation=0,360,-350,-340,-330,-320&fontFamily=Arial&fontWeight=600`,
         });
 
-        const imageUrl = `https://api.dicebear.com/6.x/initials/svg?seed=${firstName} ${lastName}`;
+        // const imageUrl = `https://api.dicebear.com/6.x/initials/svg?seed=${firstName} ${lastName}`;
         const token = generateToken(user);
 
-        user.image = imageUrl;
+        // user.image = imageUrl;
         await user.save();
 
         return res.status(200).json({
@@ -362,49 +76,108 @@ exports.signup = async (req, res) => {
 
 
 
+
+
+
+
+
+
+
+// const User = require("../models/studentmodel.js");
+// const bcrypt = require("bcrypt");
+// const jwt = require("jsonwebtoken");
+// const nodemailer = require('nodemailer');
+// require("dotenv").config();
+
+// // Create a nodemailer transporter
+// const transporter = nodemailer.createTransport({
+//     service: 'gmail',
+//     auth: {
+//       user: process.env.SENDER_EMAIL,
+//       pass: process.env.SENDER_PASSWORD,
+//     },
+// });
+
+// const generateToken = (user) => {
+//     const payload = {
+//         userId: user._id,
+//         email: user.email,
+//         accountType: user.accountType,
+//     };
+
+//     return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+// };
+
 // exports.signup = async (req, res) => {
 //     try {
-//         // get data
-//         const {firstName,lastName, email, password } = req.body;
+//         const { firstName, lastName, email, password, confirmPassword, accountType, instructorKey } = req.body;
 
-//         // check if user already exist 
 //         const existingUser = await User.findOne({ email });
 
 //         if (existingUser) {
 //             return res.status(400).json({
 //                 success: false,
-//                 message: "User Already Exists",
-//             })
+//                 message: 'User Already Exists',
+//             });
 //         }
 
-//         // Secured password 
+//         if (accountType === 'Instructor' && instructorKey !== 'ukdets@#1234') {
+//             return res.status(403).json({
+//                 success: false,
+//                 message: 'Instructor key is incorrect',
+//             });
+//         }
+
 //         let hashedPassword;
 //         try {
 //             hashedPassword = await bcrypt.hash(password, 10);
-//         }
-//         catch (err) {
+//         } catch (err) {
 //             return res.status(500).json({
 //                 success: false,
-//                 message: "Error in hashing password",
-//             })
+//                 message: 'Error in hashing password',
+//             });
 //         }
 
-//         // Create Entry for User
 //         let user = await User.create({
-//           firstName,lastName,email,password:hashedPassword
+//             firstName,
+//             lastName,
+//             email,
+//             password: hashedPassword,
+//             accountType,
+//             instructorKey,
 //         });
 
+//         // Generate verification token
+//         const verificationToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+
+//         // Save the verification token to the user document
+//         user.verificationToken = verificationToken;
+//         await user.save();
+
+//         // Send verification email
+//         const verificationLink = `${process.env.CLIENT_URL}/verify-email?token=${verificationToken}`;
+//         const mailOptions = {
+//             from: process.env.SENDER_EMAIL,
+//             to: user.email,
+//             subject: 'Verify your email address',
+//             html: `Click <a href="${verificationLink}">here</a> to verify your email address.`,
+//         };
+//         await transporter.sendMail(mailOptions);
+
+//         // Generate JWT token
+//         const token = generateToken(user);
+
+//         // Return response
 //         return res.status(200).json({
-//             success : true,
-//             message : "User Created Successfully",
-//             data : user
+//             success: true,
+//             message: 'User Created Successfully. Verification email sent.',
+//             data: { user, token },
 //         });
-//     }
-//     catch (err) {
-//         console.error(err)
+//     } catch (err) {
+//         console.error(err);
 //         return res.status(500).json({
 //             success: false,
-//             message: "User cannot be register,Please try again later",
-//         })
+//             message: 'User cannot be registered. Please try again later',
+//         });
 //     }
-// }
+// };

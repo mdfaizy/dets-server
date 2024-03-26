@@ -2,10 +2,10 @@ const exitstudent = require("../models/exitstudentModel.js");
 const User = require("../models/studentmodel.js");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const EmailDetails = require('../service/EmailDetails')
+const EmailDetails = require("../service/EmailDetails.js");
 
 const emailService = new EmailDetails();
-const exitStudent = async (req, res) => {
+exports.exitStudent = async (req, res) => {
   try {
     const {
       firstName,
@@ -87,9 +87,7 @@ const exitStudent = async (req, res) => {
   }
 };
 
-
-
-const get_exitstudent = async (req, res) => {
+exports.get_exitstudent = async (req, res) => {
   try {
     const token = req.cookies.token || req.body.token;
     // Retrieve the value of the 'id' parameter from the URL
@@ -132,11 +130,11 @@ const get_exitstudent = async (req, res) => {
   }
 };
 
- //all Exit student record
- const get_all_exit_student = async (req, res) => {
+//all Exit student record
+exports.get_all_exit_student = async (req, res) => {
   try {
     // fetch all todo items from database
-    const  Allexitstudent= await exitstudent.find({});
+    const Allexitstudent = await exitstudent.find({});
 
     // Response
     res.status(200).json({
@@ -154,23 +152,21 @@ const get_exitstudent = async (req, res) => {
   }
 };
 
-const delete_id_exitstudent = async (req, res) => {
+exports.delete_id_exitstudent = async (req, res) => {
   try {
-      const {id} = req.params;
-      console.log("delete 123",id);
-      await exitstudent.findByIdAndDelete(id);
-      res.json({
-          success: true,
-          message : "Exitstudent deleted successfully"
-      })
+    const { id } = req.params;
+    console.log("delete 123", id);
+    await exitstudent.findByIdAndDelete(id);
+    res.json({
+      success: true,
+      message: "Exitstudent deleted successfully",
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: err.message,
+      message: "Server error",
+    });
   }
-  catch (err) {
-      res.status(500).json({
-          success: false,
-          error: err.message,
-          message: "Server error",
-        });
-  }
-}
+};
 
-module.exports = { exitStudent,get_exitstudent,get_all_exit_student,delete_id_exitstudent};

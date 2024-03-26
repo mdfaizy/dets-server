@@ -49,6 +49,16 @@ const newadmissionSchema = mongoose.Schema({
     type: String,
   
   },
+  domicile: {
+    type: String,
+  
+  },
+  admission_session: {
+    type: String,
+  
+  },
+  // :"",
+    // admission_session
   phone_no: {
     type: String,
   
