@@ -22,16 +22,22 @@ const studentSchema = mongoose.Schema({
     // required: true,
     enum: ["Student", "Instructor"], // <-- Updated enum values
   },
-  newAdmission: [
+  // newAdmission: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "newadmission",
+  //   },
+  // ],
+  newAdmission:[
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "newAdmissionCont",
+      ref: "newadmission",
     },
   ],
   pgcourse: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "pgcource",
+      ref: "Pgcourses",
     },
   ],
   exitStudent: [

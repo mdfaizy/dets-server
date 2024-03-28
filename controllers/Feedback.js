@@ -1,36 +1,76 @@
-const Feedback = require("../models/feedback");
-
+// const Feedback = require("../models/feedback");
 // exports.postFeedback = async (req, res) => {
+//   //   try {
+//   //     const { title, description } = req.body;
+
+//   //     // Create feedback including user's name
+//   //     const feedback = await Feedback.create({
+//   //       title,
+//   //       description,
+//   //       // user: req.user._id,
+//   //       // userName: `${req.user.firstName} ${req.user.lastName}`
+//   //     });
+
+//   //     res.status(201).json({ success: true, data: feedback });
+//   //   } catch (error) {
+//   //     console.error(error);
+//   //     res.status(500).json({ success: false, message: 'Failed to submit feedback' });
+//   //   }
+//   // };
+
 //   try {
+//     //extract title and desxcription from reauest body
 //     const { title, description } = req.body;
-
-//     // Create feedback including user's name
-//     const feedback = await Feedback.create({
-//       title,
-//       description,
-//       user: req.user._id,
-//       userName: `${req.user.firstName} ${req.user.lastName}`
+//     //create a new Todo Obj and insert in DB
+//     const response = await Feedback.create({ title, description });
+//     //send a json response with a success flag
+//     res.status(200).json({
+//       success: true,
+//       data: response,
+//       message: "Entry Created Successfully",
 //     });
-
-//     res.status(201).json({ success: true, data: feedback });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ success: false, message: 'Failed to submit feedback' });
+//   } catch (err) {
+//     console.error(err);
+//     console.log(err);
+//     res.status(500).json({
+//       success: false,
+//       data: "internal server error",
+//       message: err.message,
+//     });
 //   }
 // };
 
+// feedback.js
+const Feedback = require("../models/feedback");
+const User = require("../models/studentmodel.js");
+const newadmission = require("../models/newadmission.js");
 // exports.postFeedback = async (req, res) => {
 //   try {
-//     const { title, description } = req.body;
+//     const { title, description ,rating } = req.body;
+//     // console.log("hiii",req);
+//     // Check if the rating is within the allowed range (1 to 5)
+//     if (rating < 1 || rating > 5) {
+//       return res.status(400).json({ success: false, message: "Invalid rating. Rating must be between 1 and 5." });
+//     }
+//     const { id } = req.user; // Assuming user ID is neede
+//     //  console.log(id);
+//     let userdata = await User.findOne({ _id: id });
+//     const data = req.newadmission;
+//     console.log("heko", userdata);
 
-//     // Create feedback including user's name
+//     // let newAdmission=await newadmission.findOne({_id:id});
+//     // console.log("newAdmission",newAdmission);
+
 //     const feedback = await Feedback.create({
 //       title,
 //       description,
-//       user: req.user._id,
-//       userName: `${req.user.firstName} ${req.user.lastName}`
+//       userName: `${userdata.firstName} ${userdata.lastName}`,
+//       image: `${userdata.image}`,
+//       rating :rating ,
+//       user: id,
 //     });
 
+//     console.log("image", userdata.image);
 //     res.status(201).json({ success: true, data: feedback });
 //   } catch (error) {
 //     console.error(error);
@@ -41,51 +81,38 @@ const Feedback = require("../models/feedback");
 // };
 
 
-
 exports.postFeedback = async (req, res) => {
-//   try {
-//     const { title, description } = req.body;
+  try {
+    const { title, description, rating,descriptio } = req.body;
+    console.log("ratig",rating,title,description,descriptio);
+    const { id } = req.user;
 
-//     // Create feedback including user's name
-//     const feedback = await Feedback.create({
-//       title,
-//       description,
-//       // user: req.user._id,
-//       // userName: `${req.user.firstName} ${req.user.lastName}`
-//     });
+    if (rating < 1 || rating > 5) {
+      return res.status(400).json({ success: false, message: "Invalid rating. Rating must be between 1 and 5." });
+    }
+    
 
-//     res.status(201).json({ success: true, data: feedback });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ success: false, message: 'Failed to submit feedback' });
-//   }
-// };
+    let userdata = await User.findOne({ _id: id });
 
-try {
-  //extract title and desxcription from reauest body
-  const {title,description} = req.body;
-  //create a new Todo Obj and insert in DB
-  const response = await Feedback.create({title,description});
-  //send a json response with a success flag
-  res.status(200).json(
-      {
-          success:true,
-          data:response,
-          message:'Entry Created Successfully'
-      }
-  );
-}
-catch(err) {
-console.error(err);
-console.log(err);
-res.status(500)
-.json({
-  success:false,
-  data:"internal server error",
-  message:err.message,
-})
-}
-}
+    const feedback = await Feedback.create({
+      title,
+      description,
+      rating,
+      descriptio,
+      userName: `${userdata.firstName} ${userdata.lastName}`,
+      image: `${userdata.image}`,
+      user: id,
+    });
+
+    res.status(201).json({ success: true, data: feedback });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to submit feedback" });
+  }
+};
+
 
 exports.getAllFeedback = async (req, res) => {
   try {
@@ -107,7 +134,6 @@ exports.getAllFeedback = async (req, res) => {
     });
   }
 };
-
 
 exports.getFeedbackId = async (req, res) => {
   try {
@@ -164,7 +190,6 @@ exports.updateFeedback = async (req, res) => {
   }
 };
 
-
 exports.deleteFeedback = async (req, res) => {
   try {
     const { id } = req.params;
@@ -182,7 +207,3 @@ exports.deleteFeedback = async (req, res) => {
     });
   }
 };
-
-
-
-

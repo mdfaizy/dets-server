@@ -8,6 +8,7 @@ const app = express();
 require("dotenv").config();
 //middleware  add
 app.use(express.json());
+
 app.use(bodyParser.json()); // Parse JSON bodies
 app.use(
   fileUpload({

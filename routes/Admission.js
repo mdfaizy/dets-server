@@ -13,9 +13,9 @@ const {
 } = require("../controllers/newAdmission.js");
 
 
-router.post("/newAdmission", newAdmission);
+router.post("/newAdmission",auth, newAdmission);
 
-router.post("/getnewadmission", getNewAdmissionById);
+router.get("/getnewadmission",auth, getNewAdmissionById);
 
 router.get("/get_new_admission", get_new_admission);
 
