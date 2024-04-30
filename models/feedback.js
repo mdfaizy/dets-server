@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const feedbackSchema = new mongoose.Schema({
     title: {
         type: String,
-        maxLength: 50,
+        maxLength: 200,
     },
     description: {
         type: String,
@@ -23,7 +23,7 @@ const feedbackSchema = new mongoose.Schema({
         type: Number,
         maxLength: 5,
         minLength:1,
-        
+    
     },
     descriptio: {
         type: String,

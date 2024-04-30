@@ -108,29 +108,6 @@ exports.isStudent = async (req, res, next) => {
         });
     }
 };
-
-// isInstructor middleware
-// exports.isInstructor = async (req, res, next) => {
-//     try {
-//         if (req.user.accountType !== 'Instructor') {
-//             return res.status(401).json({
-//                 success: false,
-//                 message: 'This is a protected route for Instructors only',
-//             });
-//         }
-//         next();
-//     } catch (error) {
-//         return res.status(500).json({
-//             success: false,
-//             message: 'User role cannot be verified, please try again',
-//         });
-//     }
-// };
-
-
-
-
-
 exports.isInstructor = async (req, res, next) => {
     try {
         if (req.user.accountType !== 'Instructor') {

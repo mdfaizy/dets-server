@@ -87,6 +87,8 @@ exports.exitStudent = async (req, res) => {
   }
 };
 
+
+
 exports.get_exitstudent = async (req, res) => {
   try {
     const token = req.cookies.token || req.body.token;

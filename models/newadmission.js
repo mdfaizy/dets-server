@@ -5,16 +5,11 @@ const newadmissionSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: User,
   },
+  //Personal details
   firstName: {
     type: String,
   },
   lastName: {
-    type: String,
-  },
-  fatherName: {
-    type: String,
-  },
-  motherName: {
     type: String,
   },
   email: {
@@ -23,10 +18,46 @@ const newadmissionSchema = mongoose.Schema({
   date_of_birth: {
     type: String,
   },
-  application_exam_no: {
+  gender: {
     type: String,
   },
+  domicile: {
+    type: String,
+  },
+  phone_no: {
+    type: String,
+  },
+  addhar_number:{
+    type: String,
+    trim:true,
+  },
+  category: {
+    type: String,
+  },
+  //parent details
+  fatherName: {
+    type: String,
+  },
+  motherName: {
+    type: String,
+  },
+  parent_occoupation:{
+  type: String,
+  },
+  parent_incom:{
+    type: String,
+  },
+  parent_phone_no:{
+    type: String,
+  },
+  //Admission details
   examType: {
+    type: String,
+  },
+  admission_session: {
+    type: String,
+  },
+  application_exam_no: {
     type: String,
   },
   scoure_rank: {
@@ -38,18 +69,20 @@ const newadmissionSchema = mongoose.Schema({
   stream: {
     type: String,
   },
-  domicile: {
+  //address details
+  village:{
     type: String,
   },
-  admission_session: {
+  police_station:{
     type: String,
   },
-  // :"",
-  // admission_session
-  phone_no: {
+  distric:{
     type: String,
   },
-  category: {
+  pin_code:{
+    type: String,
+  },
+  state_name:{
     type: String,
   },
   //10th level
@@ -73,6 +106,7 @@ const newadmissionSchema = mongoose.Schema({
   persentage_10th: {
     type: String,
   },
+//12th details
 
   schoolName_12th: {
     type: String,
@@ -80,14 +114,12 @@ const newadmissionSchema = mongoose.Schema({
   roll_No_12th: {
     type: String,
   },
-
   regisration_No_12th: {
     type: String,
   },
   board_Name_12th: {
     type: String,
   },
-
   year_of_passing_12th: {
     type: String,
   },
@@ -99,24 +131,29 @@ const newadmissionSchema = mongoose.Schema({
   rankcardFile: {
     type: String,
   },
+  //document details
+
   aadhar_card_file: {
     type: String,
   },
+  rankcardFile:{
+    type: String,
+  },
+
   your_Residence_Certificate: {
-    type: String,
-  },
-
-  passport_Photo_Size: {
-    type: String,
-  },
-
-  signature_or_Thumb: {
     type: String,
   },
   sc_MarksheetFile: {
     type: String,
   },
   hs_MarksheetFile: {
+    type: String,
+  },
+
+  passport_Photo_Size: {
+    type: String,
+  },
+  signature_or_Thumb: {
     type: String,
   },
   antiragging: {

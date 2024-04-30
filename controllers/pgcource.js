@@ -78,7 +78,12 @@ const emailService = new EmailDetails();
       user: userdata._id,
     });
 
+
+    
     emailService.sendPgCourseEmail(user);
+    await User.findByIdAndUpdate(userdata._id, { $push: { pgcourse: user._id } });
+
+
     return res.status(201).json({
       success: true,
       message: "User Created Successfully",

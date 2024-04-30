@@ -534,3 +534,92 @@ exports.get_all_Job_student = async (req, res) => {
   }
 };
 
+
+
+
+
+
+exports.delete_id_jobstudent = async (req, res) => {
+  try {
+      const {id} = req.params;
+      console.log("delete 123",id)
+      await Pgcourses.findByIdAndDelete(id);
+      res.json({
+          success: true,
+          message : "Newadmission deleted successfully"
+      })
+  }
+  catch (err) {
+      res.status(500).json({
+          success: false,
+          error: err.message,
+          message: "Server error",
+        });
+  }
+}
+
+exports.update_job_cource = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Destructure the required fields from the request body
+    const {
+      fullName,
+      email,
+      phone_No,
+      home_city,
+      companies_name,
+      companies_city,
+      package_lpa,
+      totalApplyCompanies,
+      noOfSelectInterview,
+      selectType,
+      companiesType,
+      job_role,
+    } = req.body;
+
+    // Find and update the admission record by id
+    const updatedjobcource = await Job.findByIdAndUpdate(
+      id,
+      {
+        $set: {
+          fullName,
+      email,
+      phone_No,
+      home_city,
+      companies_name,
+      companies_city,
+      package_lpa,
+      totalApplyCompanies,
+      noOfSelectInterview,
+      selectType,
+      companiesType,
+      job_role,
+
+          updatedAt: Date.now() // Update the 'updatedAt' field
+        }
+      },
+      { new: true } // To return the updated record
+    );
+
+    if (!updatedjobcource) {
+      return res.status(404).json({
+        success: false,
+        message: 'Pgcource not found'
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: updatedjobcource,
+      message: 'Updated Successfully'
+    });
+  } catch (err) {
+    console.error('Error:', err);
+    res.status(500).json({
+      success: false,
+      error: err.message,
+      message: 'Server error'
+    });
+  }
+}

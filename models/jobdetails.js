@@ -8,9 +8,6 @@ const studentJonSchema = mongoose.Schema({
   fullName: {
     type: String,
   },
-  companies_name: {
-    type: String,
-  },
   email: {
     type: String,
   },
@@ -20,24 +17,34 @@ const studentJonSchema = mongoose.Schema({
   home_city: {
     type: String,
   },
-  companies_city: {
-    type: String,
-  },
-  package_lpa: {
-    type: String,
-  },
-  job_role: {
+  
+  companies_name: {
     type: String,
   },
   selectType: {
     type: String,
   },
+ 
+  companies_city: {
+    type: String,
+  },
+ 
   totalApplyCompanies: {
     type: String,
   },
   noOfSelectInterview: {
     type: String,
   },
+
+  package_lpa: {
+    type: String,
+  },
+  job_role: {
+    type: String,
+  },
+  
+ 
+  
   companiesType: {
     type: String,
   },

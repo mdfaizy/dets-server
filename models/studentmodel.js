@@ -22,12 +22,7 @@ const studentSchema = mongoose.Schema({
     // required: true,
     enum: ["Student", "Instructor"], // <-- Updated enum values
   },
-  // newAdmission: [
-  //   {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "newadmission",
-  //   },
-  // ],
+  
   newAdmission:[
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -73,6 +68,10 @@ const studentSchema = mongoose.Schema({
     type: Date,
     default: null,
   },
-});
+  
+},
+
+{ timestamps: true },
+);
 
 module.exports = mongoose.model("User", studentSchema);
