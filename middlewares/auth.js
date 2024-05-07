@@ -49,7 +49,7 @@ exports.auth = async (req, res, next) => {
             req.cookies.token ||
             req.body.token ||
             (req.headers.authorization && req.headers.authorization.replace("Bearer ", ""));
-        console.log("Token:", token);
+        console.log("Token middleware:", token);
 
         // If JWT is missing, return 401 Unauthorized response
         if (!token) {

@@ -54,7 +54,15 @@ const newadmissionSchema = mongoose.Schema({
   examType: {
     type: String,
   },
-  admission_session: {
+
+  counselling:{
+    type: String,
+  },
+ 
+      start_session: {
+    type: String,
+  },
+  end_session: {
     type: String,
   },
   application_exam_no: {
@@ -159,6 +167,14 @@ const newadmissionSchema = mongoose.Schema({
   antiragging: {
     type: String,
   },
-});
+  exitStudent: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "exitstudentCont",
+    },
+  ],
+},
+{ timestamps: true },
+);
 
 module.exports = mongoose.model("newadmission", newadmissionSchema);

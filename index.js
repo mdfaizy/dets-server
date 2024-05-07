@@ -27,6 +27,8 @@ app.use(cookieParser());
 
 const User = require("./models/studentmodel.js");
 //routes
+// const Admin=require("./controllers/Admin.js")
+// Admin();
 const signup = require("./routes/studentroute.js");
 const signin = require("./routes/studentroute.js");
 const verify_email = require("./routes/studentroute.js");
@@ -35,7 +37,7 @@ const resetpassword = require("./routes/studentroute.js");
 // const job = require("./routes/studentroute.js");
 
 //new Student
-
+const userRoute=require("./routes/User.js");
 const newStudent = require("./routes/Admission");
 const exitstudent = require("./routes/exits.js");
 const PgCourse = require("./routes/pgcourse");
@@ -75,8 +77,12 @@ const PORT = process.env.PORT || 3000;
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
+
+
+app.use("/api/v1/auth", userRoute);
 app.use("/api/v1", signup);
 app.use("/api/v1", signin);
+
 app.use("/api/v1", verify_email);
 app.use("/api/v1", forgotpassword);
 app.use("/api/v1", resetpassword);

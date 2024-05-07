@@ -36,7 +36,10 @@ exports.newAdmission = async (req, res) => {
 
 
       examType,
-      admission_session,
+      counselling,
+      start_session,
+      end_session,
+   
       application_exam_no,
       scoure_rank,
       cource_name,
@@ -82,7 +85,9 @@ exports.newAdmission = async (req, res) => {
     // Find the user by Token in the User model
     let userdata = await User.findOne({ _id: tokendata.id });
     console.log("Found user:", userdata);
-    console.log("First name",userdata.fatherName)
+    console.log("First name",userdata.firstName);
+    console.log("Last name",userdata.lastName);
+    console.log("Email",userdata.email);
     // Check if required fields are present in the request
     // if (!firstName || !email) {
     //   return res.status(400).json({
@@ -161,9 +166,12 @@ exports.newAdmission = async (req, res) => {
       // gender,
 
 
-      firstName,
-      lastName,
-      email,
+      firstName:userdata.firstName,
+      lastName:userdata.lastName,
+
+     
+
+      email:userdata.email,
       date_of_birth,
       gender,
       domicile,
@@ -180,7 +188,9 @@ exports.newAdmission = async (req, res) => {
 
 
       examType,
-      admission_session,
+      counselling,
+      start_session,
+      end_session,
       application_exam_no,
       scoure_rank,
       cource_name,
@@ -216,6 +226,8 @@ exports.newAdmission = async (req, res) => {
       user: userdata._id,
     });
 
+    console.log(newStudent.firstName + ' ' + newStudent.lastName);
+
     // const updatedUser = await User.findByIdAndUpdate(
     //   newStudent,
     //   { $push: { user: newStudent._id } },
@@ -249,63 +261,91 @@ exports.newAdmission = async (req, res) => {
   }
 };
 
+// exports.getNewAdmissionById = async (req, res) => {
+//   try {
+//     console.log("before token")
+//     const token = req.cookies.token || req.body.token;
+//     // let token =
+//     // req.cookies.token ||
+//     // req.body.token ||
+//     // (req.headers.authorization && req.headers.authorization.replace("Bearer ", ""));
+// console.log("Tokeni:", token);
+   
+//     if (!token) {
+//       return res
+//         .status(401)
+//         .json({ success: false, message: "Unauthorized: Missing token" });
+//     }
+
+//     let tokendata = {};
+//     jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+//       if (err) {
+//         console.log("JWT verification failed:", err);
+//         return res
+//           .status(401)
+//           .json({ success: false, message: "Unauthorized: Invalid token" });
+//       } else {
+//         console.log("Decoded JWT payload:", decoded);
+//         tokendata = decoded;
+//         try {
+//           const userdata = await newadmission.findOne({ user: tokendata.id });
+//           console.log("Found user:", userdata);
+
+//           if (!userdata) {
+//             return res.status(404).json({
+//               success: false,
+//               message: "No Data Found with Given Id",
+//             });
+//           }
+//           res.status(200).json({
+//             success: true,
+//             data: userdata,
+//             message: "Success",
+//           });
+//         } catch (error) {
+//           console.error(error);
+//           res.status(500).json({
+//             success: false,
+//             error: error.message,
+//             message: "Server error",
+//           });
+//         }
+//       }
+//     });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({
+//       success: false,
+//       error: err.message,
+//       message: "Server error",
+//     });
+//   }
+// };
+
+
+
+
+
+
 exports.getNewAdmissionById = async (req, res) => {
   try {
     const token = req.cookies.token || req.body.token;
-    // let token =
-    // req.cookies.token ||
-    // req.body.token ||
-    // (req.headers.authorization && req.headers.authorization.replace("Bearer ", ""));
-console.log("Tokeni:", token);
-   
+console.log("token",token)
     if (!token) {
-      return res
-        .status(401)
-        .json({ success: false, message: "Unauthorized: Missing token" });
+      return res.status(401).json({ success: false, message: "Unauthorized: Missing token" });
     }
 
-    let tokendata = {};
-    jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
-      if (err) {
-        console.log("JWT verification failed:", err);
-        return res
-          .status(401)
-          .json({ success: false, message: "Unauthorized: Invalid token" });
-      } else {
-        console.log("Decoded JWT payload:", decoded);
-        tokendata = decoded;
-        try {
-          const userdata = await newadmission.findOne({ user: tokendata.id });
-          console.log("Found user:", userdata);
+    let tokendata = jwt.verify(token, process.env.JWT_SECRET);
+    const userdata = await newadmission.findOne({ user: tokendata.id });
 
-          if (!userdata) {
-            return res.status(404).json({
-              success: false,
-              message: "No Data Found with Given Id",
-            });
-          }
-          res.status(200).json({
-            success: true,
-            data: userdata,
-            message: "Success",
-          });
-        } catch (error) {
-          console.error(error);
-          res.status(500).json({
-            success: false,
-            error: error.message,
-            message: "Server error",
-          });
-        }
-      }
-    });
+    if (!userdata) {
+      return res.status(404).json({ success: false, message: "No Data Found with Given Id" });
+    }
+
+    res.status(200).json({ success: true, data: userdata, message: "Success" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({
-      success: false,
-      error: err.message,
-      message: "Server error",
-    });
+    res.status(500).json({ success: false, error: err.message, message: "Server error" });
   }
 };
 

@@ -26,7 +26,7 @@ exports.exitStudent = async (req, res) => {
       final_cgpa,
       token,
     } = req.body;
-    console.log(token);
+    console.log("token",token);
     // Example JWT and secret key (in a real scenario, the secret key should be stored securely)
     let tokendata = {};
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
@@ -91,6 +91,7 @@ exports.exitStudent = async (req, res) => {
 
 exports.get_exitstudent = async (req, res) => {
   try {
+    console.log("before token")
     const token = req.cookies.token || req.body.token;
     // Retrieve the value of the 'id' parameter from the URL
     console.log("hi", token);

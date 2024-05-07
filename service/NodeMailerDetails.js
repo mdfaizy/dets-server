@@ -4,7 +4,10 @@ class NodeMailerDetails {
     // attachmentFile = []
     constructor(){
         this.transporter = nodemailer.createTransport({
-            service: 'gmail',
+            // service: 'gmail',
+
+            host:process.env.MAIL_HOST,
+                port: 465,
             auth: {
                 user: process.env.SENDER_EMAIL,
                 pass: process.env.SENDER_PASSWORD,

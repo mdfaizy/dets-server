@@ -6,52 +6,6 @@ const nodemailer = require("nodemailer");
 require("dotenv").config();
 const crypto = require('crypto');
 const router= require("../routes/studentroute.js");
-
-
-
-// controllers/authController.js
-// const verify_email = async (req, res) => {
-//   const { token } = req.query;
-
-//   if (!token) {
-//       return res.status(400).json({
-//           success: false,
-//           message: 'Verification token is missing',
-//       });
-//   }
-
-//   try {
-//       // Verify the token
-//       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-//       const userId = decoded.userId;
-
-//       // Find the user by ID
-//       const user = await User.findById(userId);
-
-//       if (!user) {
-//           return res.status(404).json({
-//               success: false,
-//               message: 'User not found',
-//           });
-//       }
-
-//       // Mark the user as verified
-//       user.verified = true;
-//       await user.save();
-
-//       return res.status(200).json({
-//           success: true,
-//           message: 'Email verified successfully',
-//       });
-//   } catch (error) {
-//       console.error(error);
-//       return res.status(500).json({
-//           success: false,
-//           message: 'Failed to verify email',
-//       });
-//   }
-// };
-// // --------------------------------------------------------
 const signin = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -152,58 +106,114 @@ const signin = async (req, res) => {
 
 
 
-
 const getsigin_By_Id = async (req, res) => {
   try {
-    const token = req.cookies.token || req.body.token;
-    
-    if (!token) {
-      return res.status(401).json({
-        success: false,
-        message: "Unauthorized: Token missing",
-      });
-    }
+    const id = req.params.id;
+    console.log("id", id);
 
-    let tokendata = {};
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-      if (err) {
-        console.log("JWT verification failed:", err);
-        return res.status(403).json({
-          success: false,
-          message: "Unauthorized: Invalid token",
-        });
-      } else {
-        console.log("Decoded JWT payload:", decoded);
-        tokendata = decoded;
-        // Token is valid, handle the decoded payload
-      }
-    });
-
-    // Find the user by ID in the User model
-    let userdata = await User.findOne({ _id: tokendata.id });
-    console.log("Found user:", userdata);
     
+    // Finding user by ID
+    const userdata = await User.findById({ _id: id });;
+
+    console.log("userdata", userdata);
+
     if (!userdata) {
       return res.status(404).json({
         success: false,
         message: "No Data Found with Given Id",
       });
     }
-    
+
+    // If user data found, send a success response
     res.status(200).json({
       success: true,
       data: userdata,
       message: "Success",
     });
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    // If any error occurs during the try block, catch it here
+    console.error("Error:", error);
     res.status(500).json({
       success: false,
-      error: err.message,
+      error: error.message,
       message: "Server error",
     });
   }
 };
+
+
+
+
+
+
+// const getsigin_By_Id = async (req, res) => {
+//   try {
+//     const id = req.params.id;
+//     console.log("id",id);
+//     const userData = await User.findById({ _id: id });
+// console.log(userData);
+//     if (!userData) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "No Data Found with Given Id",
+//       });
+//     }
+//     res.status(200).json({
+//       success: true,
+//       data: userData,
+//       message: "Success",
+//     });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({
+//       success: false,
+//       error: err.message,
+//       message: "Server error",
+//     });
+//   }
+// };
+
+
+
+// const getsigin_By_Id = async (req, res) => {
+//   try {
+//     const userId = req.user.id;
+
+//     // Use populate to get the posts, comments, and likes data
+//     const user = await User.findById(userId);
+//     console.log("user",user);
+//       // .populate("posts") // Assuming 'posts' is the path to the Posts collection
+//       // .populate("comments") // Assuming 'comments' is the path to the Comments collection
+//       // .populate("likes"); // Assuming 'likes' is the path to the Likes collection
+
+//     if (!user) {
+//       return res.status(404).json({
+//         message: "User not found",
+//         success: false,
+//       });
+//     }
+
+//     // console.log(user.image);
+
+//     res.status(200).json({
+//       message: "User found successfully",
+//       success: true,
+//       user,
+//     });
+//   } catch (err) {
+//     res.status(500).json({
+//       message: "Internal Server Error",
+//       success: false,
+//       error: err.message,
+//     });
+//   }
+// };
+
+
+
+
+
+
 
 const forgotPassword = async (req, res) => {
   try {

@@ -35,12 +35,12 @@ const studentSchema = mongoose.Schema({
       ref: "Pgcourses",
     },
   ],
-  exitStudent: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "exitstudentCont",
-    },
-  ],
+  // exitStudent: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "exitstudentCont",
+  //   },
+  // ],
   job: [
     {
       type: mongoose.Schema.Types.ObjectId,

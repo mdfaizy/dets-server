@@ -1,12 +1,13 @@
-const bcrypt = require('bcrypt');
-const jwt = require("jsonwebtoken")
+const User = require("../models/studentmodel.js");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const OTP = require("../models/OTPs")
-require("dotenv").config()
 const otpGenerator = require('otp-generator');
-const User = require("../models/User");
-const Profile = require("../models/Profile")
 require("dotenv").config();
-const EmailService = require('../utils/EmailServise'); 
+
+
+
+const EmailService = require('../service/EmailDetails.js'); 
 const emailService = new EmailService();
 //send otp
 exports.sendotp = async (req, res) => {
@@ -51,6 +52,7 @@ exports.sendotp = async (req, res) => {
 };
 exports.signup = async (req, res) => {
     try {
+
       // Destructure fields from the request body
       const {
         firstName,
@@ -59,9 +61,11 @@ exports.signup = async (req, res) => {
         password,
         confirmPassword,
         accountType,
-        contactNumber,
+        instructorKey,
         otp,
       } = req.body
+
+      console.log(firstName, lastName, email, password, confirmPassword,otp,instructorKey,);
       // Check if All Details are there or not
     //   if (
     //     !firstName ||
@@ -93,6 +97,14 @@ exports.signup = async (req, res) => {
           message: "User already exists. Please sign in to continue.",
         })
       }
+
+
+      if (accountType === "Instructor" && instructorKey !== "ukdets@#1234") {
+        return res.status(403).json({
+          success: false,
+          message: "Instructor key is incorrect",
+        });
+      }
   
       // Find the most recent OTP for the email
       const response = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1)
@@ -114,26 +126,23 @@ exports.signup = async (req, res) => {
       // Hash the password
       const hashedPassword = await bcrypt.hash(password, 10)
   
-      // Create the user
-      let approved = ""
-      approved === "Instructor" ? (approved = false) : (approved = true)
   
-      // Create the Additional Profile For User
-      const profileDetails = await Profile.create({
-        gender: null,
-        dateOfBirth: null,
-        about: null,
-        contactNumber: null,
-      })
+
+      // if (accountType === "Instructor" && instructorKey !== "ukdets@#1234") {
+      //   return res.status(403).json({
+      //     success: false,
+      //     message: "Instructor key is incorrect",
+      //   });
+      // }
+      
       const user = await User.create({
         firstName,
         lastName,
         email,
-        contactNumber,
         password: hashedPassword,
-        accountType: accountType,
-        approved: approved,
-        additionalDetails: profileDetails._id,
+        accountType,
+       
+        instructorKey,
         image: `https://api.dicebear.com/6.x/initials/svg?seed=${firstName} ${lastName}&backgroundColor=00897b,00acc1,039be5,1e88e5,3949ab,43a047,5e35b1,7cb342,8e24aa,c0ca33,d81b60,e53935,f4511e,fb8c00,fdd835,ffb300,ffd5dc,ffdfbf,c0aede,d1d4f9,b6e3f4&backgroundType=solid,gradientLinear&backgroundRotation=0,360,-350,-340,-330,-320&fontFamily=Arial&fontWeight=600`,
       })
   
@@ -165,9 +174,15 @@ exports.login = async (req, res) => {
     //       message: `Please Fill up All the Required Fields`,
     //     })
     //   }
-  
+    if (email === process.env.admin_email && password === process.env.admin_password) {
+      return res.cookie("token", process.env.admin_token).status(200).json({
+        success: true,
+        token: process.env.admin_token,
+        message: "Admin logged in successfully",
+      });
+    }
       // Find user with provided email
-      const user = await User.findOne({ email }).populate("additionalDetails")
+      const user = await User.findOne({ email });
   
       // If user not found with provided email
       if (!user) {
@@ -180,13 +195,30 @@ exports.login = async (req, res) => {
   
       // Generate JWT token and Compare Password
       if (await bcrypt.compare(password, user.password)) {
-        const token = jwt.sign(
-          { email: user.email, id: user._id, role: user.role },
-          process.env.JWT_SECRET,
-          {
-            expiresIn: "24h",
-          }
-        )
+        let token;
+        // const token = jwt.sign(
+        //   { email: user.email, id: user._id, role: user.role },
+        //   process.env.JWT_SECRET,
+        //   {
+        //     expiresIn: "24h",
+        //   }
+        // )
+
+        if (user.accountType === "Instructor" &&user.instroctorkey===process.env.instructor_key) {
+          // Generate token for instructor
+          token = jwt.sign({ role: "Instructor" }, process.env.JWT_SECRET, {
+            expiresIn: "1d",
+          });
+        } else {
+          // Generate default token for other account types
+          token = jwt.sign(
+              { email: user.email, id: user._id, role: user.role },
+              process.env.JWT_SECRET,
+              {
+                expiresIn: "24h",
+              }
+            )
+        }
   
         // Save token to user document in database
         user.token = token
