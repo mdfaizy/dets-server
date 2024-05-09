@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const { login, signup, sendotp } = require("../controllers/Auth");
-const { resetPasswordToken} = require("../controllers/ResetPassword");
+const { resetPasswordToken,resetPassword} = require("../controllers/ResetPassword");
 const { auth } = require("../middlewares/auth");
 
 // Routes for Login, Signup, and Authentication
@@ -27,7 +27,7 @@ router.post("/sendotp", sendotp);
 router.post("/reset-password-token", resetPasswordToken);
 
 // Route for resetting user's password after verification
-// router.post("/reset-password", resetPassword);
+router.post("/reset-password", resetPassword);
 
 // Export the router for use in the main application
 module.exports = router;
