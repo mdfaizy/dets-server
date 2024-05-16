@@ -3,10 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const OTP = require("../models/OTPs")
 const otpGenerator = require('otp-generator');
-require("dotenv").config();
-
-
-
+require("dotenv").config(); 
 const EmailService = require('../service/EmailDetails.js'); 
 const emailService = new EmailService();
 //send otp

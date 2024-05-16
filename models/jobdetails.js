@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 const User = require("../models/studentmodel");
-const studentJonSchema = mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: User,
-  },
+const studentJonSchema = new mongoose.Schema({
   fullName: {
     type: String,
   },
@@ -48,6 +44,13 @@ const studentJonSchema = mongoose.Schema({
   companiesType: {
     type: String,
   },
-});
+
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: User
+  },
+},
+{ timestamps: true },
+);
 
 module.exports = mongoose.model("Job", studentJonSchema);

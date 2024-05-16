@@ -15,9 +15,8 @@ const {
 
 router.post("/newAdmission",auth, newAdmission);
 
-// router.get("/getnewadmissionId", getNewAdmissionById);
+router.get("/getnewadmissionId/:id", getNewAdmissionById);
 
-router.post("/getnewadmissionId",auth,getNewAdmissionById);
 
 router.get("/get_new_admission", get_new_admission);
 

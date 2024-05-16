@@ -4,9 +4,11 @@ const fileUpload = require("express-fileupload");
 const cookieParser = require("cookie-parser");
 const bodyParser = require('body-parser');
 // const cookieParser = require('cookie-parser');
+const error=require('./middlewares/error.js');
 const app = express();
 require("dotenv").config();
 //middleware  add
+
 app.use(express.json());
 
 app.use(bodyParser.json()); // Parse JSON bodies
@@ -16,7 +18,7 @@ app.use(
     tempFileDir: "/tmp/",
   })
 );
-
+app.use(error);
 app.use(cors());
 // app.use(cors({
 //   origin: 'http://127.0.0.1:5173',

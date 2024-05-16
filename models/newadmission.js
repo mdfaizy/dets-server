@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 const User = require("../models/studentmodel.js");
-const newadmissionSchema = mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: User,
-  },
+const newadmissionSchema = new mongoose.Schema({
   //Personal details
   firstName: {
     type: String,

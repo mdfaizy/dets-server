@@ -1,6 +1,4 @@
 const exitstudent = require("../models/exitstudentModel.js");
-const User = require("../models/studentmodel.js");
-const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const EmailDetails = require("../service/EmailDetails.js");
 
@@ -26,22 +24,7 @@ exports.exitStudent = async (req, res) => {
       final_cgpa,
       token,
     } = req.body;
-    console.log("token",token);
-    // Example JWT and secret key (in a real scenario, the secret key should be stored securely)
-    let tokendata = {};
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-      if (err) {
-        console.log("JWT verification failed:", err);
-        // Handle invalid token
-      } else {
-        console.log("Decoded JWT payload:", decoded);
-        tokendata = decoded;
-        // Token is valid, handle the decoded payload
-      }
-    });
-    // Find the user by Token in the User model
-    let userdata = await User.findOne({ _id: tokendata.id });
-    console.log("Found user:", userdata);
+    console.log("token", token);
 
     // Check if required fields are present in the request
     // if (!rollNo || !registration_no || !stream) {
@@ -69,7 +52,6 @@ exports.exitStudent = async (req, res) => {
       year_cgpa_3rd,
       year_cgpa_4th,
       final_cgpa,
-      user: userdata._id,
     });
 
     emailService.sendPgCourseEmail(exitUser);
@@ -87,30 +69,13 @@ exports.exitStudent = async (req, res) => {
   }
 };
 
-
-
 exports.get_exitstudent = async (req, res) => {
   try {
-    console.log("before token")
-    const token = req.cookies.token || req.body.token;
-    // Retrieve the value of the 'id' parameter from the URL
-    console.log("hi", token);
-    // const newadmissions = await newadmission.findById({ _id: id });
-
-    let tokendata = {};
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-      if (err) {
-        console.log("JWT verification failed:", err);
-        // Handle invalid token
-      } else {
-        console.log("Decoded JWT payload:", decoded);
-        tokendata = decoded;
-        // Token is valid, handle the decoded payload
-      }
-    });
+    const id = req.params.id;
+    console.log("id", id);
 
     // Find the user by email in the User model
-    let userdata = await exitstudent.findOne({ user: tokendata.id });
+    let userdata = await exitstudent.findById({ _id: id });
     console.log("Found user:", userdata);
     if (!userdata) {
       return res.status(404).json({
@@ -143,7 +108,7 @@ exports.get_all_exit_student = async (req, res) => {
     res.status(200).json({
       success: true,
       data: Allexitstudent,
-      message: "Entire New Addmission  Data is Fetched",
+      message: " Exit Student  Data is Fetched",
     });
   } catch (err) {
     console.error(err);
@@ -162,7 +127,7 @@ exports.delete_id_exitstudent = async (req, res) => {
     await exitstudent.findByIdAndDelete(id);
     res.json({
       success: true,
-      message: "Exitstudent deleted successfully",
+      message: "Exit Student deleted successfully",
     });
   } catch (err) {
     res.status(500).json({
@@ -172,4 +137,3 @@ exports.delete_id_exitstudent = async (req, res) => {
     });
   }
 };
-

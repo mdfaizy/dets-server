@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const User=require('../models/studentmodel')
-const exitStudentSchema = mongoose.Schema({
+const exitStudentSchema = new  mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: User

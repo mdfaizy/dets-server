@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const User=require("../models/studentmodel")
-
-const pgStudentSchema = mongoose.Schema({
+const pgStudentSchema =new  mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: User

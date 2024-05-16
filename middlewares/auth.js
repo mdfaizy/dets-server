@@ -82,7 +82,24 @@ exports.auth = async (req, res, next) => {
 
 
 
-
+// exports.auth = (req, res, next) => {
+//     const token = req.cookies.token || req.body.token || req.headers.authorization?.split(" ")[1];
+  
+//     if (!token) {
+//       return res.status(401).json({ message: "Authorization token is missing" });
+//     }
+  
+//     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+//       if (err) {
+//         console.error("JWT verification failed:", err);
+//         return res.status(401).json({ message: "Unauthorized" });
+//       } else {
+//         console.log("Decoded JWT payload:", decoded);
+//         req.user = decoded;
+//         next();
+//       }
+//     });
+//   };
 
 
 

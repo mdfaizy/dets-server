@@ -1,9 +1,6 @@
 const newadmission = require("../models/newadmission.js");
-const User = require("../models/studentmodel.js");
 require("dotenv").config();
 const cloudinary = require("cloudinary").v2;
-const jwt = require("jsonwebtoken");
-
 async function uploadFileToCloudinary(file, folder) {
   const options = { folder, resource_type: "auto" };
   return await cloudinary.uploader.upload(file.tempFilePath, options);
@@ -12,7 +9,6 @@ function isFileTypeSupported(filename, supportedTypes) {
   const fileType = filename.split(".").pop().toLowerCase();
   return supportedTypes.includes(fileType);
 }
-
 exports.newAdmission = async (req, res) => {
   try {
     // Destructure the required fields from the request body
@@ -70,24 +66,9 @@ exports.newAdmission = async (req, res) => {
     } = req.body;
     console.log(token);
 
-    // Example JWT and secret key (in a real scenario, the secret key should be stored securely)
-    let tokendata = {};
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-      if (err) {
-        console.log("JWT verification failed:", err);
-        // Handle invalid token
-      } else {
-        console.log("Decoded JWT payload:", decoded);
-        tokendata = decoded;
-        // Token is valid, handle the decoded payload
-      }
-    });
-    // Find the user by Token in the User model
-    let userdata = await User.findOne({ _id: tokendata.id });
-    console.log("Found user:", userdata);
-    console.log("First name",userdata.firstName);
-    console.log("Last name",userdata.lastName);
-    console.log("Email",userdata.email);
+    
+    // let userdata = await User.findOne({ _id: tokendata.id });
+  
     // Check if required fields are present in the request
     // if (!firstName || !email) {
     //   return res.status(400).json({
@@ -148,30 +129,16 @@ exports.newAdmission = async (req, res) => {
     console.log(uploadedFiles[3]);
     // Save details to the database using the newadmission model
     const newStudent = await newadmission.create({
-      // firstName,
-      // lastName,
-      // fatherName,
-      // motherName,
-      // email,
-      // date_of_birth,
-      // examType,
-      // application_exam_no,
-      // scoure_rank,
-      // cource_name,
-      // stream,
-      // phone_no,
-      // category,
-      // admission_session,
-      // domicile,
-      // gender,
-
-
-      firstName:userdata.firstName,
-      lastName:userdata.lastName,
+      
+// userdata.firstName
+// :userdata.lastName
+// :userdata.email
+      firstName,
+      lastName,
 
      
 
-      email:userdata.email,
+      email,
       date_of_birth,
       gender,
       domicile,
@@ -223,34 +190,17 @@ exports.newAdmission = async (req, res) => {
       antiragging: uploadedFiles[6],
       rankcardFile: uploadedFiles[5],
       signature_or_Thumb: uploadedFiles[7],
-      user: userdata._id,
+      // user: userdata._id,
     });
 
     console.log(newStudent.firstName + ' ' + newStudent.lastName);
-
-    // const updatedUser = await User.findByIdAndUpdate(
-    //   newStudent,
-    //   { $push: { user: newStudent._id } },
-    //   { new: true }
-    // )
-    //   .populate("comments") //Populates the comment array with the comments document
-    //   .exec();
-    // console.log(updatedUser);
-
-    await User.findByIdAndUpdate(userdata._id, { $push: {  newAdmission: newStudent._id } });
-
-    //  await User.findByIdAndUpdate(newadmission, { $push: { newAdmission: newStudent._id } },
-    //   { new: true })
-    //   .populate("newAdmission") //Populates the comment array with the comments document
-    //   .exec();
-
     return res.status(201).json({
       success: true,
       message: "User Created Successfully",
       // data: newStudent,
       // data: updatedUser,
       newAdmission: newStudent,
-      // updatedPost:NewAdmission,
+     
     });
   } catch (err) {
     console.error(err);
@@ -261,93 +211,25 @@ exports.newAdmission = async (req, res) => {
   }
 };
 
-// exports.getNewAdmissionById = async (req, res) => {
-//   try {
-//     console.log("before token")
-//     const token = req.cookies.token || req.body.token;
-//     // let token =
-//     // req.cookies.token ||
-//     // req.body.token ||
-//     // (req.headers.authorization && req.headers.authorization.replace("Bearer ", ""));
-// console.log("Tokeni:", token);
-   
-//     if (!token) {
-//       return res
-//         .status(401)
-//         .json({ success: false, message: "Unauthorized: Missing token" });
-//     }
-
-//     let tokendata = {};
-//     jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
-//       if (err) {
-//         console.log("JWT verification failed:", err);
-//         return res
-//           .status(401)
-//           .json({ success: false, message: "Unauthorized: Invalid token" });
-//       } else {
-//         console.log("Decoded JWT payload:", decoded);
-//         tokendata = decoded;
-//         try {
-//           const userdata = await newadmission.findOne({ user: tokendata.id });
-//           console.log("Found user:", userdata);
-
-//           if (!userdata) {
-//             return res.status(404).json({
-//               success: false,
-//               message: "No Data Found with Given Id",
-//             });
-//           }
-//           res.status(200).json({
-//             success: true,
-//             data: userdata,
-//             message: "Success",
-//           });
-//         } catch (error) {
-//           console.error(error);
-//           res.status(500).json({
-//             success: false,
-//             error: error.message,
-//             message: "Server error",
-//           });
-//         }
-//       }
-//     });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({
-//       success: false,
-//       error: err.message,
-//       message: "Server error",
-//     });
-//   }
-// };
-
-
-
-
-
-
 exports.getNewAdmissionById = async (req, res) => {
   try {
-    const token = req.cookies.token || req.body.token;
-console.log("token",token)
-    if (!token) {
-      return res.status(401).json({ success: false, message: "Unauthorized: Missing token" });
-    }
-
-    let tokendata = jwt.verify(token, process.env.JWT_SECRET);
-    const userdata = await newadmission.findOne({ user: tokendata.id });
-
+    const id = req.params.id;
+    console.log("ID:", id);
+    const userdata = await newadmission.findById({_id:id});
+    console.log("User data:", userdata);
     if (!userdata) {
       return res.status(404).json({ success: false, message: "No Data Found with Given Id" });
     }
-
     res.status(200).json({ success: true, data: userdata, message: "Success" });
   } catch (err) {
-    console.error(err);
+    console.error("Error:", err);
     res.status(500).json({ success: false, error: err.message, message: "Server error" });
   }
 };
+
+
+
+
 
 exports.get_new_admission = async (req, res) => {
   try {

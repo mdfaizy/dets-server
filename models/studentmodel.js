@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const studentSchema = mongoose.Schema({
+const studentSchema =new  mongoose.Schema({
   firstName: {
     type: String,
     required: true,
@@ -23,30 +23,30 @@ const studentSchema = mongoose.Schema({
     enum: ["Student", "Instructor"], // <-- Updated enum values
   },
   
-  newAdmission:[
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "newadmission",
-    },
-  ],
-  pgcourse: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Pgcourses",
-    },
-  ],
+  // newAdmission:[
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "newadmission",
+  //   },
+  // ],
+  // pgcourse: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "Pgcourses",
+  //   },
+  // ],
   // exitStudent: [
   //   {
   //     type: mongoose.Schema.Types.ObjectId,
   //     ref: "exitstudentCont",
   //   },
   // ],
-  job: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "jobDeatils",
-    },
-  ],
+  // job: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "jobDeatils",
+  //   },
+  // ],
   feedback: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "feedback",
