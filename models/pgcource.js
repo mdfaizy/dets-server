@@ -53,6 +53,8 @@ const pgStudentSchema =new  mongoose.Schema({
   categoryRank: {
     type: String,
   },
-});
+},
+{ timestamps: true },
+);
 
 module.exports = mongoose.model("Pgcourses", pgStudentSchema);

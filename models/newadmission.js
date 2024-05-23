@@ -163,12 +163,10 @@ const newadmissionSchema = new mongoose.Schema({
   antiragging: {
     type: String,
   },
-  exitStudent: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "exitstudentCont",
-    },
-  ],
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: User
+  },
 },
 { timestamps: true },
 );

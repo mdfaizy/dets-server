@@ -16,9 +16,9 @@ class NodeMailerDetails {
     }
 
     sendMailer(body,subject,email,attachment){
-
+// process.env.SENDER_EMAIL
         const mailObj = {
-            from: process.env.SENDER_EMAIL,
+            from: `University of Kalyani (DETS)`,
             to: email,
             cc: process.env.SENDER_EMAIL,
             subject: subject,

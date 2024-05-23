@@ -23,31 +23,27 @@ exports.newAdmission = async (req, res) => {
       addhar_number,
       category,
 
-
       fatherName,
       motherName,
       parent_phone_no,
       parent_incom,
       parent_occoupation,
 
-
       examType,
       counselling,
       start_session,
       end_session,
-   
+
       application_exam_no,
       scoure_rank,
       cource_name,
       stream,
-    
+
       village,
       police_station,
       distric,
       pin_code,
       state_name,
-
-     
 
       schoolName_10th,
       roll_No_10th,
@@ -64,18 +60,9 @@ exports.newAdmission = async (req, res) => {
       persentage_12th,
       token,
     } = req.body;
-    console.log(token);
 
-    
-    // let userdata = await User.findOne({ _id: tokendata.id });
-  
-    // Check if required fields are present in the request
-    // if (!firstName || !email) {
-    //   return res.status(400).json({
-    //     success: false,
-    //     message: "Missing required fields",
-    //   });
-    // }
+    const userId = req.user.id;
+    console.log("nw", userId);
 
     // Check if the user has already submitted an admission
     // const existingAdmission = await newadmission.findOne({ user: userdata._id });
@@ -129,14 +116,8 @@ exports.newAdmission = async (req, res) => {
     console.log(uploadedFiles[3]);
     // Save details to the database using the newadmission model
     const newStudent = await newadmission.create({
-      
-// userdata.firstName
-// :userdata.lastName
-// :userdata.email
       firstName,
       lastName,
-
-     
 
       email,
       date_of_birth,
@@ -146,13 +127,11 @@ exports.newAdmission = async (req, res) => {
       addhar_number,
       category,
 
-
       fatherName,
       motherName,
       parent_phone_no,
       parent_incom,
       parent_occoupation,
-
 
       examType,
       counselling,
@@ -162,13 +141,13 @@ exports.newAdmission = async (req, res) => {
       scoure_rank,
       cource_name,
       stream,
-    
+
       village,
       police_station,
       distric,
       pin_code,
       state_name,
-      
+
       schoolName_10th,
       roll_No_10th,
       regisration_No_10th,
@@ -190,17 +169,14 @@ exports.newAdmission = async (req, res) => {
       antiragging: uploadedFiles[6],
       rankcardFile: uploadedFiles[5],
       signature_or_Thumb: uploadedFiles[7],
-      // user: userdata._id,
+      user: userId,
     });
-
-    console.log(newStudent.firstName + ' ' + newStudent.lastName);
     return res.status(201).json({
       success: true,
       message: "User Created Successfully",
       // data: newStudent,
       // data: updatedUser,
       newAdmission: newStudent,
-     
     });
   } catch (err) {
     console.error(err);
@@ -211,30 +187,110 @@ exports.newAdmission = async (req, res) => {
   }
 };
 
-exports.getNewAdmissionById = async (req, res) => {
+exports.get_student_profile = async (req, res) => {
   try {
-    const id = req.params.id;
-    console.log("ID:", id);
-    const userdata = await newadmission.findById({_id:id});
-    console.log("User data:", userdata);
-    if (!userdata) {
-      return res.status(404).json({ success: false, message: "No Data Found with Given Id" });
+    const id = req.user.id;
+    console.log("userId", id);
+    const Newadmission = await newadmission.findOne({ user: id });
+    console.log("new Admissiom", Newadmission);
+    if (!Newadmission) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
     }
-    res.status(200).json({ success: true, data: userdata, message: "Success" });
+    res.status(200).json({
+      success: true,
+      message: "User Data fetched successfully",
+      Newadmission,
+    });
   } catch (err) {
-    console.error("Error:", err);
-    res.status(500).json({ success: false, error: err.message, message: "Server error" });
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: err.message,
+    });
   }
 };
 
+// exports.getNewAdmissionById = async (req, res) => {
+//   try {
+//     const id = req.params.id;
+//     console.log("ID:", id);
+//     const userdata = await newadmission.findById(id);
+//     console.log("User data:", userdata);
+//     if (!userdata) {
+//       return res
+//         .status(404)
+//         .json({ success: false, message: "No Data Found with Given Id" });
+//     }
+//     res.status(200).json({ success: true, data: userdata, message: "Success" });
+//   } catch (err) {
+//     console.error("Error:", err);
+//     res
+//       .status(500)
+//       .json({ success: false, error: err.message, message: "Server error" });
+//   }
+// };
 
+// exports.get_student_profile = async (req, res) => {
+//   try {
+//     const id = req.user.id;
+//     console.log("userId", id);
+//     const Newadmission = await newadmission.findOne({ user: id });
+//     console.log("pd", pgdata);
+//     if (!Newadmission) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "User not found",
+//       });
+//     }
+//     res.status(200).json({
+//       success: true,
+//       message: "User Data fetched successfully",
+//       Newadmission,
+//     });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({
+//       success: false,
+//       message: "Internal server error",
+//       error: err.message,
+//     });
+//   }
+// };
 
-
+exports.getNewAdmissionById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log("id", id);
+    const Newadmission = await newadmission.findById(id);
+    if (!Newadmission) {
+      return res.status(404).json({
+        success: false,
+        message: "Student Data not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Student Data fetched successfully",
+      Newadmission,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: err.message,
+    });
+  }
+};
 
 exports.get_new_admission = async (req, res) => {
   try {
     // fetch all newadmissions items from database
-    const newadmissions = await newadmission.find({});
+    const newadmissions = await newadmission.find();
 
     // Response
     res.status(200).json({

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const User = require("../models/studentmodel");
 const studentJonSchema = new mongoose.Schema({
+
   fullName: {
     type: String,
   },
@@ -12,6 +13,7 @@ const studentJonSchema = new mongoose.Schema({
   },
   home_city: {
     type: String,
+
   },
   
   companies_name: {
@@ -19,6 +21,7 @@ const studentJonSchema = new mongoose.Schema({
   },
   selectType: {
     type: String,
+
   },
  
   companies_city: {
@@ -54,3 +57,8 @@ const studentJonSchema = new mongoose.Schema({
 );
 
 module.exports = mongoose.model("Job", studentJonSchema);
+
+
+
+
+

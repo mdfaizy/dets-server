@@ -26,9 +26,9 @@ exports.pg_cource = async (req, res) => {
 
       categoryRank,
       InstituteCity,
-      token,
+      // token,
     } = req.body;
-
+const userId=req.user.id;
     // Check if required fields are present in the request
     // if (!employee_name || !select_company || !job_role) {
     //   return res.status(400).json({
@@ -58,17 +58,15 @@ exports.pg_cource = async (req, res) => {
 
       categoryRank,
       InstituteCity,
-      user: userdata._id,
+      user:userId,
     });
 
     emailService.sendPgCourseEmail(user);
-    await User.findByIdAndUpdate(userdata._id, {
-      $push: { pgcourse: user._id },
-    });
+    
 
     return res.status(201).json({
       success: true,
-      message: "User Created Successfully",
+      message: "PG Data  Successfully",
       data: user,
     });
   } catch (err) {
@@ -80,30 +78,57 @@ exports.pg_cource = async (req, res) => {
   }
 };
 
-exports.get_pg_student = async (req, res) => {
+
+exports.getstudent_profile = async (req, res) => {
   try {
-    const id = res.params.id;
-    console.log("id", id);
-    // Find the user by email in the User model
-    let userdata = await Pgcourses.findById({ _id: id });
-    console.log("Found user:", userdata);
-    if (!userdata) {
+    const id = req.user.id;
+    console.log("userId", id);
+    const pgdata = await Pgcourses.findOne({ user: id });
+    console.log("pd", pgdata);
+    if (!pgdata) {
       return res.status(404).json({
         success: false,
-        message: "No Data Found with Given Id",
+        message: "User not found",
       });
     }
     res.status(200).json({
       success: true,
-      data: userdata,
-      message: "Success",
+      message: "User Data fetched successfully",
+      pgdata,
     });
   } catch (err) {
     console.error(err);
     res.status(500).json({
       success: false,
+      message: "Internal server error",
       error: err.message,
-      message: "Server error",
+    });
+  }
+};
+
+
+exports.get_pg_course_byId = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log("id", id);
+    const pgdata = await Pgcourses.findById(id);
+    if (!pgdata) {
+      return res.status(404).json({
+        success: false,
+        message: "Job Data not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Job Data fetched successfully",
+      pgdata,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: err.message,
     });
   }
 };

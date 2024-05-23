@@ -1,7 +1,6 @@
 const exitstudent = require("../models/exitstudentModel.js");
 require("dotenv").config();
 const EmailDetails = require("../service/EmailDetails.js");
-
 const emailService = new EmailDetails();
 exports.exitStudent = async (req, res) => {
   try {
@@ -24,7 +23,8 @@ exports.exitStudent = async (req, res) => {
       final_cgpa,
       token,
     } = req.body;
-    console.log("token", token);
+    const userId = req.user.id;
+
 
     // Check if required fields are present in the request
     // if (!rollNo || !registration_no || !stream) {
@@ -52,6 +52,7 @@ exports.exitStudent = async (req, res) => {
       year_cgpa_3rd,
       year_cgpa_4th,
       final_cgpa,
+      user:userId,
     });
 
     emailService.sendPgCourseEmail(exitUser);
@@ -65,6 +66,34 @@ exports.exitStudent = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Failed to create user. Please try again later.",
+    });
+  }
+};
+
+
+
+exports.getStudentProfile = async (req, res) => {
+  try {
+    const id = req.user.id;
+    console.log("userId", id);
+    const exitData = await exitstudent.findOne({ user: id });
+    if (!exitData) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "User Data fetched successfully",
+      exitData,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: err.message,
     });
   }
 };
@@ -137,3 +166,79 @@ exports.delete_id_exitstudent = async (req, res) => {
     });
   }
 };
+
+
+exports.updateExitStudentById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Destructure the required fields from the request body
+    const {
+      firstName,
+      lastName,
+      fatherName,
+      motherName,
+      date_of_birth,
+      email,
+      registrationNo,
+      Phone_no,
+      rollNo,
+      session,
+      stream,
+      year_cgpa_1th,
+      year_cgpa_2nd,
+      year_cgpa_3rd,
+      year_cgpa_4th,
+      final_cgpa,
+    } = req.body;
+
+    // Find and update the admission record by id
+    const updatexitstudent = await exitstudent.findByIdAndUpdate(
+      id,
+      {
+        $set: {
+          firstName,
+          lastName,
+          fatherName,
+          motherName,
+          date_of_birth,
+          email,
+          registrationNo,
+          Phone_no,
+          rollNo,
+          session,
+          stream,
+          year_cgpa_1th,
+          year_cgpa_2nd,
+          year_cgpa_3rd,
+          year_cgpa_4th,
+          final_cgpa,
+
+          updatedAt: Date.now(),
+        },
+      },
+      { new: true }
+    );
+
+    if (!updatexitstudent) {
+      return res.status(404).json({
+        success: false,
+        message: "Job Data not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: updatexitstudent,
+      message: "Updated Successfully",
+    });
+  } catch (err) {
+    console.error("Error:", err);
+    res.status(500).json({
+      success: false,
+      error: err.message,
+      message: "Server error",
+    });
+  }
+};
+

@@ -17,8 +17,10 @@ exports.job = async (req, res) => {
       selectType,
       companiesType,
       job_role,
+      token,
     } = req.body;
 
+    const userId = req.user.id;
     const user = await Job.create({
       fullName,
       email,
@@ -32,6 +34,7 @@ exports.job = async (req, res) => {
       selectType,
       companiesType,
       job_role,
+      user: userId,
     });
 
     return res.status(201).json({
@@ -47,25 +50,40 @@ exports.job = async (req, res) => {
     });
   }
 };
-
-// Route for fetching a job by ID
-exports.get_job_student = async (req, res) => {
+exports.get_student_profile = async (req, res) => {
   try {
-    const id = req.params.id;
-    console.log("id", id);
-
-    // if (!mongoose.Types.ObjectId.isValid(id)) {
-    //   return res.status(404).json({ message: "User doesn't exist" });
-    // }
-    const jobData = await Job.findById({_id:id}).populate({
-      path: "user",
-      
-    })
-    .exec();
+    const id = req.user.id;
+    console.log("userId", id);
+    const jobData = await Job.findOne({ user: id });
     if (!jobData) {
       return res.status(404).json({
         success: false,
-        message: "Job not found",
+        message: "User not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "User Data fetched successfully",
+      jobData,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: err.message,
+    });
+  }
+};
+exports.get_job_student = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log("id", id);
+    const jobData = await Job.findById(id);
+    if (!jobData) {
+      return res.status(404).json({
+        success: false,
+        message: "Job Data not found",
       });
     }
     res.status(200).json({
@@ -78,27 +96,14 @@ exports.get_job_student = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Internal server error",
-      error: err.message, 
+      error: err.message,
     });
   }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
 //All job information in Student  data in Dets
 exports.get_all_Job_student = async (req, res) => {
   try {
-    // fetch all todo items from database
+    // fetch all Job items from database
     const AllJob = await Job.find({});
 
     // Response
@@ -121,16 +126,13 @@ exports.delete_id_jobstudent = async (req, res) => {
   try {
     // 1. Check for missing or invalid ID:
     const { id } = req.params;
-    console.log("id",id)
+    console.log("id", id);
     if (!id || !mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({
         success: false,
         message: "Invalid job ID provided",
       });
     }
-
-    console.log("id", id); // Still useful for debugging
-
     // 2. Proceed with deletion if ID is valid:
     await Job.findByIdAndDelete(id);
     res.json({
@@ -138,22 +140,16 @@ exports.delete_id_jobstudent = async (req, res) => {
       message: "Job Data deleted successfully",
     });
   } catch (err) {
-    console.error(err); // Log the actual error for debugging
+    console.error(err); 
     res.status(500).json({
       success: false,
-      error: "Internal server error", // Avoid client-side exposure of detailed errors
+      error: "Internal server error",
       message: "An error occurred while deleting the job data",
     });
   }
 };
 
-
-
-
-
-
-
-exports.update_job_cource = async (req, res) => {
+exports.update_job_form_data = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -179,42 +175,42 @@ exports.update_job_cource = async (req, res) => {
       {
         $set: {
           fullName,
-      email,
-      phone_No,
-      home_city,
-      companies_name,
-      companies_city,
-      package_lpa,
-      totalApplyCompanies,
-      noOfSelectInterview,
-      selectType,
-      companiesType,
-      job_role,
+          email,
+          phone_No,
+          home_city,
+          companies_name,
+          companies_city,
+          package_lpa,
+          totalApplyCompanies,
+          noOfSelectInterview,
+          selectType,
+          companiesType,
+          job_role,
 
-          updatedAt: Date.now() // Update the 'updatedAt' field
-        }
+          updatedAt: Date.now(),
+        },
       },
-      { new: true } // To return the updated record
+      { new: true }
     );
 
     if (!updatedjobcource) {
       return res.status(404).json({
         success: false,
-        message: 'Job Data not found'
+        message: "Job Data not found",
       });
     }
 
     res.status(200).json({
       success: true,
       data: updatedjobcource,
-      message: 'Updated Successfully'
+      message: "Updated Successfully",
     });
   } catch (err) {
-    console.error('Error:', err);
+    console.error("Error:", err);
     res.status(500).json({
       success: false,
       error: err.message,
-      message: 'Server error'
+      message: "Server error",
     });
   }
-}
+};
