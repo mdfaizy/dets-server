@@ -44,7 +44,7 @@ const getPgCourseEmailTemplate = (user) => {
                                   <tr style="background-color: #f2f2f2">
                                       <td width="100px" style="font-family:calibri,helvetica,arial,sans-serif;">Frist Name</td>
                                       <td width="40px" align="center"><b>:</b></td>
-                                      <td width="340px" style="font-family:calibri,helvetica,arial,sans-serif;">${user.fristName}</td>
+                                      <td width="340px" style="font-family:calibri,helvetica,arial,sans-serif;">${user.firstName}</td>
                                   </tr>
                                   <tr style="background-color: #f2f2f2; border-bottom: 1px solid #ddd;">
                                       <td width="100px" style="font-family:calibri,helvetica,arial,sans-serif;">Last Name</td>

@@ -1,7 +1,8 @@
 const Job = require("../models/jobdetails.js");
 require("dotenv").config();
 const mongoose = require("mongoose");
-
+const EmailDetails = require("../service/EmailDetails");
+const emailService = new EmailDetails();
 exports.job = async (req, res) => {
   try {
     const {
@@ -36,7 +37,8 @@ exports.job = async (req, res) => {
       job_role,
       user: userId,
     });
-
+    // 
+    emailService.sendJobDetailsEmail(user);
     return res.status(201).json({
       success: true,
       message: "Job Created Successfully",

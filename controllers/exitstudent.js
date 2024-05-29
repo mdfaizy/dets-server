@@ -21,7 +21,7 @@ exports.exitStudent = async (req, res) => {
       year_cgpa_3rd,
       year_cgpa_4th,
       final_cgpa,
-      token,
+     
     } = req.body;
     const userId = req.user.id;
 

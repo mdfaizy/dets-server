@@ -10,7 +10,11 @@ const {
   get_student_profile,
 } = require("../controllers/newAdmission.js");
 
-router.post("/newAdmission", auth, isStudent, newAdmission);
+router.post("/newAdmission", auth, isStudent, 
+
+// ([{name:'student_photo'},{name:"aadhar_card_check"},{name:"voter_id_card_checkbox"},{name:"income_certificate_checkbox"},{name:"domicile_certificate_checkbox"},{name:"patient_thumb_impression"}]), 
+
+newAdmission);
 router.get("/get_Profile", auth, get_student_profile);
 router.get("/getnewadmissionId/:id", auth, getNewAdmissionById);
 router.get("/get_new_admission", get_new_admission);

@@ -1,5 +1,9 @@
 const newadmission = require("../models/newadmission.js");
 require("dotenv").config();
+
+const EmailDetails = require("../service/EmailDetails");
+const emailService = new EmailDetails();
+
 const cloudinary = require("cloudinary").v2;
 async function uploadFileToCloudinary(file, folder) {
   const options = { folder, resource_type: "auto" };
@@ -110,12 +114,14 @@ exports.newAdmission = async (req, res) => {
         uploadedFiles.push(response.secure_url);
       }
     }
+
+    
     console.log(uploadedFiles[0]);
     console.log(uploadedFiles[1]);
     console.log(uploadedFiles[2]);
     console.log(uploadedFiles[3]);
     // Save details to the database using the newadmission model
-    const newStudent = await newadmission.create({
+    const newAdmission = await newadmission.create({
       firstName,
       lastName,
 
@@ -171,12 +177,12 @@ exports.newAdmission = async (req, res) => {
       signature_or_Thumb: uploadedFiles[7],
       user: userId,
     });
+
+    emailService.sendNewAdmissionCourseEmail(newAdmission);
     return res.status(201).json({
       success: true,
       message: "User Created Successfully",
-      // data: newStudent,
-      // data: updatedUser,
-      newAdmission: newStudent,
+      newAdmission,
     });
   } catch (err) {
     console.error(err);
@@ -336,26 +342,42 @@ exports.update_New_Admission = async (req, res) => {
     const {
       firstName,
       lastName,
-      fatherName,
-      motherName,
+
       email,
       date_of_birth,
+      gender,
+      domicile,
+      phone_no,
+      addhar_number,
+      category,
+
+      fatherName,
+      motherName,
+      parent_phone_no,
+      parent_incom,
+      parent_occoupation,
+
       examType,
+      counselling,
+      start_session,
+      end_session,
       application_exam_no,
       scoure_rank,
       cource_name,
       stream,
-      phone_no,
-      category,
-      admission_session,
-      domicile,
+
+      village,
+      police_station,
+      distric,
+      pin_code,
+      state_name,
+
       schoolName_10th,
       roll_No_10th,
       regisration_No_10th,
       board_Name_10th,
       year_of_passing_10th,
       persentage_10th,
-
       schoolName_12th,
       roll_No_12th,
       regisration_No_12th,
@@ -371,32 +393,48 @@ exports.update_New_Admission = async (req, res) => {
         $set: {
           firstName,
           lastName,
-          fatherName,
-          motherName,
+    
           email,
           date_of_birth,
+          gender,
+          domicile,
+          phone_no,
+          addhar_number,
+          category,
+    
+          fatherName,
+          motherName,
+          parent_phone_no,
+          parent_incom,
+          parent_occoupation,
+    
           examType,
+          counselling,
+          start_session,
+          end_session,
           application_exam_no,
           scoure_rank,
           cource_name,
           stream,
-          phone_no,
-          category,
-
+    
+          village,
+          police_station,
+          distric,
+          pin_code,
+          state_name,
+    
           schoolName_10th,
           roll_No_10th,
           regisration_No_10th,
           board_Name_10th,
           year_of_passing_10th,
           persentage_10th,
-
           schoolName_12th,
           roll_No_12th,
           regisration_No_12th,
           board_Name_12th,
           year_of_passing_12th,
           persentage_12th,
-
           updatedAt: Date.now(), // Update the 'updatedAt' field
         },
       },
