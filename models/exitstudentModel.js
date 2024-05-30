@@ -12,36 +12,48 @@ const exitStudentSchema = new mongoose.Schema(
     lastName: {
       type: String,
     },
+    email: {
+      type: String,
+    }, 
+    date_of_birth:{
+      type: String,
+    },
+    gender:{
+      type: String,
+    },
+    domicile:{
+      type: String,
+    },
+    phone_no:{
+      type:Number,
+    },
+   
+    category:{
+      type: String,
+    },
+  // Parents details
     fatherName: {
       type: String,
     },
     motherName: {
       type: String,
     },
-    email: {
-      type: String,
+    parentPhoneno:{
+      type:Number,
     },
+    // collage details
     rollNo: {
       type: String,
     },
-    date_of_birth: {
-      type: String,
-    },
-
     stream: {
       type: String,
     },
     registrationNo: {
       type: String,
     },
-
     session: {
       type: String,
     },
-    Phone_no: {
-      type: String,
-    },
-
     year_cgpa_1th: {
       type: String,
     },

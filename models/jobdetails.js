@@ -8,33 +8,42 @@ const studentJonSchema = new mongoose.Schema({
   email: {
     type: String,
   },
+ 
   phone_No: {
     type: Number,
   },
+  father_Name: {
+    type: String,
+  },
+  date_of_birth:{
+    type: String,
+  },
+  gender: {
+    type: String,
+  },
+  categorie: {
+    type: String,
+  },
+  
   home_city: {
     type: String,
 
   },
-  
   companies_name: {
     type: String,
   },
   selectType: {
     type: String,
-
   },
- 
-  companies_city: {
-    type: String,
-  },
- 
   totalApplyCompanies: {
     type: String,
   },
   noOfSelectInterview: {
     type: String,
   },
-
+  companies_city: {
+    type: String,
+  },
   package_lpa: {
     type: String,
   },

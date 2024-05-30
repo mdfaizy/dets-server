@@ -1,17 +1,14 @@
 const Pgcourses = require("../models/pgcource.js");
-const User = require("../models/studentmodel.js");
-const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const EmailDetails = require("../service/EmailDetails");
-
 const emailService = new EmailDetails();
-exports.pg_cource = async (req, res) => {
+exports.pg_course = async (req, res) => {
   try {
     const {
       firstName,
       lastName,
       fatherName,
-      motherName,
+
       date_of_birth,
       email,
       InstituteName,
@@ -26,9 +23,9 @@ exports.pg_cource = async (req, res) => {
 
       categoryRank,
       InstituteCity,
-      // token,
+      token,
     } = req.body;
-const userId=req.user.id;
+    const userId = req.user.id;
     // Check if required fields are present in the request
     // if (!employee_name || !select_company || !job_role) {
     //   return res.status(400).json({
@@ -43,7 +40,7 @@ const userId=req.user.id;
       firstName,
       lastName,
       fatherName,
-      motherName,
+
       date_of_birth,
       email,
       InstituteName,
@@ -58,11 +55,10 @@ const userId=req.user.id;
 
       categoryRank,
       InstituteCity,
-      user:userId,
+      user: userId,
     });
 
     emailService.sendPgCourseEmail(user);
-    
 
     return res.status(201).json({
       success: true,
@@ -77,7 +73,6 @@ const userId=req.user.id;
     });
   }
 };
-
 
 exports.getstudent_profile = async (req, res) => {
   try {
@@ -105,7 +100,6 @@ exports.getstudent_profile = async (req, res) => {
     });
   }
 };
-
 
 exports.get_pg_course_byId = async (req, res) => {
   try {
@@ -135,7 +129,7 @@ exports.get_pg_course_byId = async (req, res) => {
 
 //all pg student information is available
 
-exports.get_all_pgcource_student = async (req, res) => {
+exports.get_all_course_student = async (req, res) => {
   try {
     // fetch all todo items from database
     const Allpgcource = await Pgcourses.find({});
@@ -155,7 +149,7 @@ exports.get_all_pgcource_student = async (req, res) => {
     });
   }
 };
-
+//Delete single pg student information is available
 exports.delete_id_pgstudent = async (req, res) => {
   try {
     const { id } = req.params;
@@ -173,8 +167,8 @@ exports.delete_id_pgstudent = async (req, res) => {
     });
   }
 };
-
-exports.update_pg_cource = async (req, res) => {
+//update pd courses data 
+exports.update_pg_course = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -183,7 +177,7 @@ exports.update_pg_cource = async (req, res) => {
       firstName,
       lastName,
       fatherName,
-      motherName,
+
       date_of_birth,
       email,
       InstituteName,
@@ -208,7 +202,7 @@ exports.update_pg_cource = async (req, res) => {
           firstName,
           lastName,
           fatherName,
-          motherName,
+
           date_of_birth,
           email,
           InstituteName,

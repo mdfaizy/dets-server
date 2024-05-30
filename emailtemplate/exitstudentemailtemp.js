@@ -38,90 +38,315 @@ const getExitStudentEmailTemplate = (user) => {
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr style="background-color: #f2f2f2">
-                                      <td width="100px" style="font-family:calibri,helvetica,arial,sans-serif;">Frist Name</td>
-                                      <td width="40px" align="center"><b>:</b></td>
-                                      <td width="340px" style="font-family:calibri,helvetica,arial,sans-serif;">${user.firistName}</td>
-                                  </tr>
-                                  <tr style="background-color: #f2f2f2; border-bottom: 1px solid #ddd;">
-                                      <td width="100px" style="font-family:calibri,helvetica,arial,sans-serif;">Last Name</td>
-                                      <td width="40px" align="center"><b>:</b></td>
-                                      <td width="340px" style="font-family:calibri,helvetica,arial,sans-serif;">${user.lastName}</td>
-                                  </tr>
-                                  <tr style="background-color: #f2f2f2">
-                                      <td width="100px" style="font-family:calibri,helvetica,arial,sans-serif;">Father Name</td>
-                                      <td width="40px" align="center"><b>:</b></td>
-                                      <td width="340px" style="font-family:calibri,helvetica,arial,sans-serif;">${user.fatherName}</td>
-                                  </tr>
-                                  <tr style="background-color: #f2f2f2; border-bottom: 1px solid #ddd;">
-                                      <td width="100px" style="font-family:calibri,helvetica,arial,sans-serif;">Mother Name</td>
-                                      <td width="40px" align="center"><b>:</b></td>
-                                      <td width="340px" style="font-family:calibri,helvetica,arial,sans-serif;">${user.motherName}</td>
-                                  </tr>
-                                  <tr style="background-color: #f2f2f2; border-bottom: 1px solid #ddd;">
-                                      <td width="100px" style="font-family:calibri,helvetica,arial,sans-serif;">Email</td>
-                                      <td width="40px" align="center"><b>:</b></td>
-                                      <td width="340px" style="font-family:calibri,helvetica,arial,sans-serif;">${user.email}</td>
-                                  </tr>
-                                  <tr style="background-color: #f2f2f2; border-bottom: 1px solid #ddd;">
-                                      <td width="100px" style="font-family:calibri,helvetica,arial,sans-serif;">Date of Birth</td>
-                                      <td width="40px" align="center"><b>:</b></td>
-                                      <td width="340px" style="font-family:calibri,helvetica,arial,sans-serif;">${user.date_of_birth}</td>
-                                  </tr>
-                                  <tr style="background-color: #f2f2f2; border-bottom: 1px solid #ddd;">
-                                      <td width="100px" style="font-family:calibri,helvetica,arial,sans-serif;">Roll No:</td>
-                                      <td width="40px" align="center"><b>:</b></td>
-                                      <td width="340px" style="font-family:calibri,helvetica,arial,sans-serif;">${user.rollNo}</td>
-                                  </tr>
-                                  <tr style="background-color: #f2f2f2; border-bottom: 1px solid #ddd;">
-                                      <td width="100px" style="font-family:calibri,helvetica,arial,sans-serif;">Stream</td>
-                                      <td width="40px" align="center"><b>:</b></td>
-                                      <td width="340px" style="font-family:calibri,helvetica,arial,sans-serif;">${user.stream}</td>
-                                  </tr>
-                                  <tr style="background-color: #f2f2f2; border-bottom: 1px solid #ddd;">
-                                      <td width="100px" style="font-family:calibri,helvetica,arial,sans-serif;">Registration No</td>
-                                      <td width="40px" align="center"><b>:</b></td>
-                                      <td width="340px" style="font-family:calibri,helvetica,arial,sans-serif;">${user.registrationNo}</td>
-                                  </tr>
-                                  <tr style="background-color: #f2f2f2; border-bottom: 1px solid #ddd;">
-                                      <td width="100px" style="font-family:calibri,helvetica,arial,sans-serif;">Session</td>
-                                      <td width="40px" align="center"><b>:</b></td>
-                                      <td width="340px" style="font-family:calibri,helvetica,arial,sans-serif;">${user.session}</td>
-                                  </tr>
-                                  <tr style="background-color: #f2f2f2; border-bottom: 1px solid #ddd;">
-                                      <td width="100px" style="font-family:calibri,helvetica,arial,sans-serif;">Phone No</td>
-                                      <td width="40px" align="center"><b>:</b></td>
-                                      <td width="340px" style="font-family:calibri,helvetica,arial,sans-serif;">${user.Phone_no}</td>
-                                  </tr>
-                                  <tr style="background-color: #f2f2f2; border-bottom: 1px solid #ddd;">
-                                      <td width="100px" style="font-family:calibri,helvetica,arial,sans-serif;">First Year CGAP</td>
-                                      <td width="40px" align="center"><b>:</b></td>
-                                      <td width="340px" style="font-family:calibri,helvetica,arial,sans-serif;">${user.year_cgpa_1th}</td>
-                                  </tr>
-                                  <tr style="background-color: #f2f2f2; border-bottom: 1px solid #ddd;">
-                                      <td width="100px" style="font-family:calibri,helvetica,arial,sans-serif;">Second Year CGPA</td>
-                                      <td width="40px" align="center"><b>:</b></td>
-                                      <td width="340px" style="font-family:calibri,helvetica,arial,sans-serif;">${user.year_cgpa_2th}</td>
-                                  </tr>
-    
-                                  <tr style="background-color: #f2f2f2; border-bottom: 1px solid #ddd;">
-                                  <td width="100px" style="font-family:calibri,helvetica,arial,sans-serif;">Third Year CGPA</td>
-                                  <td width="40px" align="center"><b>:</b></td>
-                                  <td width="340px" style="font-family:calibri,helvetica,arial,sans-serif;">${year_cgpa_3rd}</td>
-                              </tr>
-                              <tr style="background-color: #f2f2f2; border-bottom: 1px solid #ddd;">
-                              <td width="100px" style="font-family:calibri,helvetica,arial,sans-serif;"> Fouth Year CGPA</td>
-                              <td width="40px" align="center"><b>:</b></td>
-                              <td width="340px" style="font-family:calibri,helvetica,arial,sans-serif;">${user.year_cgpa_4th}</td>
-                          </tr>
-                          <tr style="background-color: #f2f2f2; border-bottom: 1px solid #ddd;">
-                          <td width="100px" style="font-family:calibri,helvetica,arial,sans-serif;">Final Cgpa</td>
-                          <td width="40px" align="center"><b>:</b></td>
-                          <td width="340px" style="font-family:calibri,helvetica,arial,sans-serif;">${user.final_cgpa}</td>
-                      </tr>
-                      
-                                  
-                                </tbody>
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Frist Name:
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${user.firstName}</td>
+                                </tr>
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Last Name
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${user.lastName}</td>
+                                </tr>
+  
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Email
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${user.email}</td>
+                                </tr>
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Date of Birth
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${user.date_of_birth}</td>
+                                </tr>
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Gender
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${user.gender}</td>
+                                </tr>
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Domicile
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${user.domicile}</td>
+                                </tr>
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Category
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${user.category}</td>
+                                </tr>
+  
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Phone No
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${user.phone_no}</td>
+                                </tr>
+  
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Father Name
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${user.fatherName}</td>
+                                </tr>
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Mother Name
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${user.motherName}</td>
+                                </tr>
+  
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Stream
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${user.stream}</td>
+                                </tr>
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Session
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${user.session}</td>
+                                </tr>
+  
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Roll No
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${user.rollNo}</td>
+                                </tr>
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Registration No
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${user.registrationNo}</td>
+                                </tr>
+  
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Session
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${user.session}</td>
+                                </tr>
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    First Year
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${user.year_cgpa_1th}</td>
+                                </tr>
+  
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Second Year
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${user.year_cgpa_2th}</td>
+                                </tr>
+  
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Third Year
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${user.year_cgpa_3rd}</td>
+                                </tr>
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Final Year
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${user.year_cgpa_4th}</td>
+                                </tr>
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Total CGPA
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${user.final_cgpa}</td>
+                                </tr>
+                              </tbody>
                             </table>
                           </td>
                       </tr>

@@ -25,7 +25,7 @@ const getJobTemplate = (data) => {
                       <tr>
                           <td colspan="3" style="font-family:calibri,helvetica,arial,sans-serif; font-size: 18px;text-align: center;">
                         <span>POSTGRADUATE </span>
-                            <!-- <span>Dear Akram<br>Your inquiry has been received</span> -->
+                           
                         </td>
                       </tr>
                       <tr style="display: grid; ">
@@ -39,124 +39,225 @@ const getJobTemplate = (data) => {
                                   </tr>
                                 </thead>
                                 <tbody className="tbody_formData_info">
-                        <tr>
-                          <td className="tbody_formData_info_name">
-                            Full Name:
-                          </td>
-                          <td className="tbody_fromData_and_info_dot">
-                            <b>:</b>
-                          </td>
-                          <td>${data.fullName}</td>
-                        </tr>
-                        <tr>
-                          <td className="tbody_formData_info_name">
-                            Companies Name
-                          </td>
-                          <td className="tbody_fromData_and_info_dot">
-                            <b>:</b>
-                          </td>
-                          <td>${data.companies_name}</td>
-                        </tr>
-                        <tr>
-                          <td className="tbody_formData_info_name">Email</td>
-                          <td className="tbody_fromData_and_info_dot">
-                            <b>:</b>
-                          </td>
-                          <td>${data.email}</td>
-                        </tr>
-                        <tr>
-                          <td className="tbody_formData_info_name">
-                            Date of Birth
-                          </td>
-                          <td className="tbody_fromData_and_info_dot">
-                            <b>:</b>
-                          </td>
-                          <td>${data.date_of_birth}</td>
-                        </tr>
-                        <tr>
-                          <td className="tbody_formData_info_name">Phone No</td>
-                          <td className="tbody_fromData_and_info_dot">
-                            <b>:</b>
-                          </td>
-                          <td>${data.phone_no}</td>
-                        </tr>
-                        <tr>
-                          <td className="tbody_formData_info_name">
-                            Home City
-                          </td>
-                          <td className="tbody_fromData_and_info_dot">
-                            <b>:</b>
-                          </td>
-                          <td>${data.home_city}</td>
-                        </tr>
-                        <tr>
-                          <td className="tbody_formData_info_name">
-                            Companies City
-                          </td>
-                          <td className="tbody_fromData_and_info_dot">
-                            <b>:</b>
-                          </td>
-                          <td>${data.companies_city}</td>
-                        </tr>
-                        <tr>
-                          <td className="tbody_formData_info_name">
-                            Package lpa
-                          </td>
-                          <td className="tbody_fromData_and_info_dot">
-                            <b>:</b>
-                          </td>
-                          <td>${data.package_lpa}</td>
-                        </tr>
-                        <tr>
-                          <td className="tbody_formData_info_name">Job Role</td>
-                          <td className="tbody_fromData_and_info_dot">
-                            <b>:</b>
-                          </td>
-                          <td>${data.job_role}</td>
-                        </tr>
-                        <tr>
-                          <td className="tbody_formData_info_name">
-                            Selection Type
-                          </td>
-                          <td className="tbody_fromData_and_info_dot">
-                            <b>:</b>
-                          </td>
-                          <td>${data.selectType}</td>
-                        </tr>
-                        <tr>
-                          <td
-                            width="100px"
-                            style={{
-                              fontFamily:
-                                "calibri, helvetica, arial, sans-serif",
-                              paddingLeft: "10px",
-                            }}
-                          >
-                            Total Apply Companies
-                          </td>
-                          <td className="tbody_fromData_and_info_dot">
-                            <b>:</b>
-                          </td>
-                          <td>${data.totalApplyCompanies}</td>
-                        </tr>
-                        <tr>
-                          <td className="tbody_formData_info_name">
-                            No Of Select Interview
-                          </td>
-                          <td className="tbody_fromData_and_info_dot">
-                            <b>:</b>
-                          </td>
-                          <td>${data.noOfSelectInterview}</td>
-                        </tr>
-                        <tr>
-                          <td className="tbody_formData_info_name">
-                            Companies Type
-                          </td>
-                          <td className="tbody_fromData_and_info_dot">
-                            <b>:</b>
-                          </td>
-                          <td>${data.companiesType}</td>
-                        </tr>
+                               
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Full Name:
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${data.fullName}</td>
+                                </tr>
+  
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Father Name
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${data.father_Name}</td>
+                                </tr>
+  
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Gender
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${data.gender}</td>
+                                </tr>
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Email
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${data.email}</td>
+                                </tr>
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Categorie
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${data.categorie}</td>
+                                </tr>
+  
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Date of Birth
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${data.date_of_birth}</td>
+                                </tr>
+  
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Home Town
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${data.home_city}</td>
+                                </tr>
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Companies Name
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${data.companies_name}</td>
+                                </tr>
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Companies Loacation
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${data.companies_city}</td>
+                                </tr>
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Job Role
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${data.job_role}</td>
+                                </tr>
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Package
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${data.package_lpa}</td>
+                                </tr>
+  
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Selection
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${data.selectType}</td>
+                                </tr>
+  
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Apply For Job
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${data.totalApplyCompanies}</td>
+                                </tr>
+  
+                                <tr>
+                                  <td
+                                    width="100px"
+                                    style={{
+                                      fontFamily:
+                                        "calibri, helvetica, arial, sans-serif",
+                                    }}
+                                  >
+                                    Companies Type
+                                  </td>
+                                  <td width="40px" align="center">
+                                    <b>:</b>
+                                  </td>
+                                  <td>${data.companiesType}</td>
+                                </tr>
+                              
                       </tbody>
                             </table>
                           </td>

@@ -7,24 +7,29 @@ exports.exitStudent = async (req, res) => {
     const {
       firstName,
       lastName,
+      email,
+      date_of_birth,
+      gender,
+      domicile,
+      phone_no,
+
+      category,
+      // Parents details
       fatherName,
       motherName,
-      date_of_birth,
-      email,
-      registrationNo,
-      Phone_no,
+      parentPhoneno,
+      // collage details
       rollNo,
-      session,
       stream,
+      registrationNo,
+      session,
       year_cgpa_1th,
-      year_cgpa_2nd,
+      year_cgpa_2th,
       year_cgpa_3rd,
       year_cgpa_4th,
       final_cgpa,
-     
     } = req.body;
     const userId = req.user.id;
-
 
     // Check if required fields are present in the request
     // if (!rollNo || !registration_no || !stream) {
@@ -38,24 +43,31 @@ exports.exitStudent = async (req, res) => {
     const exitUser = await exitstudent.create({
       firstName,
       lastName,
+      email,
+      date_of_birth,
+      gender,
+      domicile,
+      phone_no,
+
+      category,
+      // Parents details
       fatherName,
       motherName,
-      date_of_birth,
-      email,
-      Phone_no,
-      stream,
-      session,
+      parentPhoneno,
+      // collage details
       rollNo,
+      stream,
       registrationNo,
+      session,
       year_cgpa_1th,
-      year_cgpa_2nd,
+      year_cgpa_2th,
       year_cgpa_3rd,
       year_cgpa_4th,
       final_cgpa,
-      user:userId,
+      user: userId,
     });
 
-    emailService.sendPgCourseEmail(exitUser);
+    emailService.sendExitStudentEmail(exitUser);
     return res.status(201).json({
       success: true,
       message: "User Created Successfully",
@@ -69,8 +81,6 @@ exports.exitStudent = async (req, res) => {
     });
   }
 };
-
-
 
 exports.getStudentProfile = async (req, res) => {
   try {
@@ -167,7 +177,6 @@ exports.delete_id_exitstudent = async (req, res) => {
   }
 };
 
-
 exports.updateExitStudentById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -176,17 +185,24 @@ exports.updateExitStudentById = async (req, res) => {
     const {
       firstName,
       lastName,
+      email,
+      date_of_birth,
+      gender,
+      domicile,
+      phone_no,
+
+      category,
+      // Parents details
       fatherName,
       motherName,
-      date_of_birth,
-      email,
-      registrationNo,
-      Phone_no,
+      parentPhoneno,
+      // collage details
       rollNo,
-      session,
       stream,
+      registrationNo,
+      session,
       year_cgpa_1th,
-      year_cgpa_2nd,
+      year_cgpa_2th,
       year_cgpa_3rd,
       year_cgpa_4th,
       final_cgpa,
@@ -198,21 +214,28 @@ exports.updateExitStudentById = async (req, res) => {
       {
         $set: {
           firstName,
-          lastName,
-          fatherName,
-          motherName,
-          date_of_birth,
-          email,
-          registrationNo,
-          Phone_no,
-          rollNo,
-          session,
-          stream,
-          year_cgpa_1th,
-          year_cgpa_2nd,
-          year_cgpa_3rd,
-          year_cgpa_4th,
-          final_cgpa,
+      lastName,
+      email,
+      date_of_birth,
+      gender,
+      domicile,
+      phone_no,
+
+      category,
+      // Parents details
+      fatherName,
+      motherName,
+      parentPhoneno,
+      // collage details
+      rollNo,
+      stream,
+      registrationNo,
+      session,
+      year_cgpa_1th,
+      year_cgpa_2th,
+      year_cgpa_3rd,
+      year_cgpa_4th,
+      final_cgpa,
 
           updatedAt: Date.now(),
         },
@@ -241,4 +264,3 @@ exports.updateExitStudentById = async (req, res) => {
     });
   }
 };
-
