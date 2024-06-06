@@ -45,6 +45,9 @@ const exitstudent = require("./routes/exits.js");
 const PgCourse = require("./routes/pgcourse");
 const Job = require("./routes/job");
 const Feedback=require("./routes/Feedback.js");
+const profileRoutes = require("./routes/Profile");
+
+
 // const newAdmission = require("./routes/studentroute.js");
 // const getNewAdmissionById = require("./routes/studentroute.js");
 // const exitStudent = require("./routes/studentroute.js");
@@ -88,6 +91,8 @@ app.use("/api/v1", signin);
 app.use("/api/v1", verify_email);
 app.use("/api/v1", forgotpassword);
 app.use("/api/v1", resetpassword);
+app.use("/api/v1/profile", profileRoutes);
+
 
 // app.use("/api/v1/reasetpassword/:token", reasetpassword);
 // app.use("/api/v1", job);

@@ -57,9 +57,10 @@ const exitStudentSchema = new mongoose.Schema(
     year_cgpa_1th: {
       type: String,
     },
-    year_cgpa_2th: {
+    year_cgpa_2nd: {
       type: String,
     },
+    
     year_cgpa_3rd: {
       type: String,
     },

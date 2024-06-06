@@ -28,7 +28,11 @@ const studentSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-
+    additionalDetails: {
+			type: mongoose.Schema.Types.ObjectId,
+			required: true,
+			ref: "Profile",
+		},
     feedback: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "feedback",
