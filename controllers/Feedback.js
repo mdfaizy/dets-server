@@ -8,7 +8,12 @@ exports.postFeedback = async (req, res) => {
     const { id } = req.user;
 
     if (rating < 1 || rating > 5) {
-      return res.status(400).json({ success: false, message: "Invalid rating. Rating must be between 1 and 5." });
+      return res
+        .status(400)
+        .json({
+          success: false,
+          message: "Invalid rating. Rating must be between 1 and 5.",
+        });
     }
 
     let userdata = await User.findOne({ _id: id });
@@ -22,7 +27,6 @@ exports.postFeedback = async (req, res) => {
     // const firstName = userNewadmission.firstName;
     // const PhoneNo = userNewadmission.phone_no;
     // const examType=userNewadmission.examType;
-  
 
     const feedback = await Feedback.create({
       title,
@@ -31,19 +35,18 @@ exports.postFeedback = async (req, res) => {
       descriptio,
       userName: `${userdata.firstName} ${userdata.lastName}`,
       image: `${userdata.image}`,
-      studentInformation:`${userdata.stream}-${userdata.cource_name}`,
+      studentInformation: `${userdata.stream}-${userdata.course_name}`,
       user: id,
     });
-    
 
     res.status(201).json({ success: true, data: feedback });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ success: false, message: "Failed to submit feedback" });
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to submit feedback" });
   }
 };
-
-
 
 exports.getAllFeedback = async (req, res) => {
   try {

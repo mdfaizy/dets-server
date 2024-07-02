@@ -7,7 +7,6 @@ dotenv.config();
 const auth = async (req, res, next) => {
   try {
     // Extracting JWT from request cookies, body or header
-    // console.log("highlight")
     const token =
       req.cookies.token ||
       req.body.token ||

@@ -5,7 +5,6 @@ const studentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-
     lastName: {
       type: String,
       required: true,
@@ -21,16 +20,15 @@ const studentSchema = new mongoose.Schema(
     accountType: {
       type: String,
       // required: true,
-      enum: ["Student", "Instructor"],
+      enum: ["Student", "Instructor","Admin"],
     },
-
     isAdmissionTaken: {
       type: Boolean,
       default: false,
     },
     additionalDetails: {
 			type: mongoose.Schema.Types.ObjectId,
-			required: true,
+			// required: true,
 			ref: "Profile",
 		},
     feedback: {
@@ -46,14 +44,6 @@ const studentSchema = new mongoose.Schema(
       type: String,
       // required: true,
     },
-    // resetPasswordToken: {
-    //   type: String,
-    //   default: null,
-    // },
-    // resetPasswordExpires: {
-    //   type: Date,
-    //   default: null,
-    // },
     token: {
       type: String,
     },

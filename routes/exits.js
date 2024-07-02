@@ -8,9 +8,11 @@ const {
   get_all_exit_student,
   delete_id_exitstudent,
   getStudentProfile,
-  updateExitStudentById
+  updateExitStudentById,
+  getExitStudentByOne
 } = require("../controllers/exitstudent.js");
 router.post("/exitStudent" ,auth,exitStudent);
+router.get("/getExitStudentByOne",getExitStudentByOne)
 router.get("/getStudent",auth,getStudentProfile);
 router.get("/getExitStudentByID/:id", get_exitstudent);
 router.get("/get_all_exit_student", get_all_exit_student);

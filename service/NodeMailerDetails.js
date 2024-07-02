@@ -20,7 +20,7 @@ class NodeMailerDetails {
         const mailObj = {
             from: `University of Kalyani (DETS)`,
             to: email,
-            cc: process.env.SENDER_EMAIL,
+            // cc: process.env.SENDER_EMAIL,
             subject: subject,
             html: body,
             // attachments: (!!attachment && attachment.length > 0) ? attachment : []

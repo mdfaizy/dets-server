@@ -82,6 +82,33 @@ exports.exitStudent = async (req, res) => {
   }
 };
 
+
+exports.getExitStudentByOne = async (req, res) => {
+  try {
+    const exitStudent = await exitstudent.findOne();
+    
+    if (!exitStudent) {
+      return res.status(404).json({
+        success: false,
+        message: "Exit Student Data not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Exit Student Data fetched successfully",
+      exitStudent,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: err.message,
+    });
+  }
+};
+
+
 exports.getStudentProfile = async (req, res) => {
   try {
     const id = req.user.id;
@@ -115,7 +142,7 @@ exports.get_exitstudent = async (req, res) => {
 
     // Find the user by email in the User model
     let userdata = await exitstudent.findById({ _id: id });
-    console.log("Found user:", userdata);
+    
     if (!userdata) {
       return res.status(404).json({
         success: false,

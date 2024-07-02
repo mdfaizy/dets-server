@@ -149,7 +149,7 @@ const sendNewStudentEmailTemplate = (newAdmission) => {
                             <td className="tbody_fromData_and_info_dot">
                               <b>:</b>
                             </td>
-                            <td>${newAdmission.parent_occoupation}</td>
+                            <td>${newAdmission.parent_occupation}</td>
                           </tr>
 
                           <tr>
@@ -159,7 +159,7 @@ const sendNewStudentEmailTemplate = (newAdmission) => {
                             <td className="tbody_fromData_and_info_dot">
                               <b>:</b>
                             </td>
-                            <td>${newAdmission.parent_incom}</td>
+                            <td>${newAdmission.parent_income}</td>
                           </tr>
 
                           <tr>
@@ -228,14 +228,14 @@ const sendNewStudentEmailTemplate = (newAdmission) => {
                             <td className="tbody_fromData_and_info_dot">
                               <b>:</b>
                             </td>
-                            <td>${newAdmission.scoure_rank}</td>
+                            <td>${newAdmission.score_rank}</td>
                           </tr>
                           <tr>
                             <td className="tbody_formData_info_name">Cource</td>
                             <td className="tbody_fromData_and_info_dot">
                               <b>:</b>
                             </td>
-                            <td>${newAdmission.cource_name}</td>
+                            <td>${newAdmission.course_name}</td>
                           </tr>
                           <tr>
                             <td className="tbody_formData_info_name">Stream</td>
@@ -269,12 +269,12 @@ const sendNewStudentEmailTemplate = (newAdmission) => {
 
                           <tr>
                             <td className="tbody_formData_info_name">
-                              Distric
+                              district
                             </td>
                             <td className="tbody_fromData_and_info_dot">
                               <b>:</b>
                             </td>
-                            <td>${newAdmission.distric}</td>
+                            <td>${newAdmission.district}</td>
                           </tr>
 
                           <tr>
@@ -326,7 +326,7 @@ const sendNewStudentEmailTemplate = (newAdmission) => {
                             <td className="tbody_fromData_and_info_dot">
                               <b>:</b>
                             </td>
-                            <td>${newAdmission.regisration_No_10th}</td>
+                            <td>${newAdmission.registration_no_10th}</td>
                           </tr>
 
                           <tr>

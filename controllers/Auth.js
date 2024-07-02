@@ -242,39 +242,11 @@ exports.login = async (req, res) => {
 
 
 
-// exports.get_Profile = async (req, res) => {
-//   try {
-//     const id = req.user.id;
-//     console.log("userId", id);
-//     const user = await User.findOne({ user: id });
-//     console.log("user", user);
-//     if (!user) {
-//       return res.status(404).json({
-//         success: false,
-//         message: "User not found",
-//       });
-//     }
-//     res.status(200).json({
-//       success: true,
-//       message: "User Data fetched successfully",
-//       user,
-//     });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({
-//       success: false,
-//       message: "Internal server error",
-//       error: err.message,
-//     });
-//   }
-// };
 
 
 exports.get_Profile = async (req, res) => {
   try {
     const id = req.user.id;
-    console.log("User ID:", id);
-
     // Find the user by ID
     const user = await User.findById(id);
     console.log("User:", user);
@@ -305,7 +277,7 @@ exports.get_Profile = async (req, res) => {
 
 exports.get_all_user = async (req, res) => {
   try {
-    // fetch all Job items from database
+    // fetch all user from database
     const AllUser = await User.find({});
 
     // Response
