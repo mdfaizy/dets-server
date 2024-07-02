@@ -20,10 +20,10 @@ app.use(
 );
 app.use(error);
 app.use(cors());
-// app.use(cors({
-//   origin: 'http://localhost:5173/',
-//   credentials: true,
-// }));
+app.use(cors({
+  origin: 'https://faizy-react-dets--remarkable-croissant-46bc60.netlify.app/',
+  credentials: true,
+}));
 
 app.use(cookieParser());
 
