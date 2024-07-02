@@ -22,8 +22,11 @@ app.use(error);
 // app.use(cors());
 app.use(cors({
   origin: 'https://faizy-react-dets--remarkable-croissant-46bc60.netlify.app/',
+  optionSuccessstatus:200,
   credentials: true,
 }));
+
+
 
 app.use(cookieParser());
 
