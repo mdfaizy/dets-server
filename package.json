@@ -27,7 +27,7 @@
     "nodemailer": "^6.9.8",
     "nodemon": "^3.0.1",
     "npkill": "^0.12.2",
-    "otp-generator": "^4.0.1",
+    "otp-generator": "^3.0.0",
     "Router": "^2.1.0"
   }
 }
