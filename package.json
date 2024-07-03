@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "build": "npm install && npm run build-server",
-"build-server": "echo 'Building server...' && npm run compile-server",
-"compile-server": "echo 'Compiling server...'"
+"build": "npm install && npm run build-server",
+    "build-server": "echo 'Building server...' && npm run compile-server",
+    "compile-server": "echo 'Compiling server...' && mkdir -p public && cp -r dist/* public/"
   },
   "keywords": [],
   "author": "",
