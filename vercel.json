@@ -5,7 +5,11 @@
     ],
     "routes": [
       { "handle": "filesystem" },
-      { "src": "/(.*)", "dest": "/index.js" }
+      { "src": "/(.*)", "dest": "/index.js" },
+      { "method": "GET", "src": "/api/v1", "dest": "/index.js" },
+      { "method": "POST", "src": "/api/v1", "dest": "/index.js" },
+      { "method": "PUT", "src": "/api/v1", "dest": "/index.js" },
+      { "method": "DELETE", "src": "/api/v1", "dest": "/index.js" }
     ],
     "public": false
   }
