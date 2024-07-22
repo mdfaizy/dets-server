@@ -350,53 +350,7 @@ exports.newAdmission = async (req, res) => {
 };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //fined by one
-
 exports.getNewAdmissionByOne = async (req, res) => {
   try {
     const Newadmission = await newadmission.findOne();

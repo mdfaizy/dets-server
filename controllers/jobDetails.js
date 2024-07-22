@@ -60,6 +60,31 @@ exports.job = async (req, res) => {
     });
   }
 };
+
+exports.getJobStudentByOne = async (req, res) => {
+  try {
+    const JobApplication = await Job.findOne();
+    
+    if (!JobApplication) {
+      return res.status(404).json({
+        success: false,
+        message: "Exit Student Data not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Exit Student Data fetched successfully",
+      JobApplication,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: err.message,
+    });
+  }
+};
 exports.get_student_profile = async (req, res) => {
   try {
     const id = req.user.id;

@@ -12,10 +12,13 @@ const {
   get_student_profile,
   get_all_Job_student,
   delete_id_jobstudent,
-  update_job_form_data
+  update_job_form_data,
+  getJobStudentByOne
 } = require("../controllers/jobDetails");
 
+
 router.post("/job", auth, isStudent, job);
+router.get("/getJobStudentByOne",auth,getJobStudentByOne)
 // router.get("/getJob_ById/:id",get_job_student);
 router.get("/getJob_ById/:id", auth, get_job_student);
 router.get("/get_Profile", auth, get_student_profile);

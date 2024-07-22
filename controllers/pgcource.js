@@ -74,6 +74,32 @@ exports.pg_course = async (req, res) => {
   }
 };
 
+
+exports.getPgStudentByOne = async (req, res) => {
+  try {
+    const PgcourceData = await Pgcourses.findOne();
+    
+    if (!PgcourceData) {
+      return res.status(404).json({
+        success: false,
+        message: "Exit Student Data not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Exit Student Data fetched successfully",
+      PgcourceData,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: err.message,
+    });
+  }
+};
+
 exports.getstudent_profile = async (req, res) => {
   try {
     const id = req.user.id;

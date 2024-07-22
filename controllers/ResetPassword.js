@@ -25,7 +25,7 @@ exports.resetPasswordToken = async (req, res) => {
     );
     console.log("DETAILS", updatedDetails);
 
-    const url = `http://127.0.0.1:5173/update-password/${token}`;
+    const url = `https://remarkable-croissant-46bc60.netlify.app/${token}`;
     console.log("URL", url);
     emailService.sendEmailResetPasswordLink(
       email,

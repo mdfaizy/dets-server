@@ -8,9 +8,12 @@ const {
   get_all_course_student,
   delete_id_pgstudent,
   update_pg_course,
+  getPgStudentByOne
 } = require("../controllers/pgcource");
 
 router.post("/pg_cource",auth, pg_course);
+// router.get("/getPgStudentByOne",auth,getPgStudentByOne)
+router.get("/getPgStudentByOne",getPgStudentByOne)
 router.get("/getstudent_profile",auth,getstudent_profile);
 router.get("/getPgCourseById/:id",auth, get_pg_course_byId);
 router.get("/get_all_pgcource_student", get_all_course_student);
